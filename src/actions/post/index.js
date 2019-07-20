@@ -1,5 +1,5 @@
-import {AsyncStorage} from 'react-native';
-import NavigationService from '../../components/NavigationService';
+// import {AsyncStorage} from 'react-native';
+// import NavigationService from '../../components/NavigationService';
 
 const axios = require('axios')
 
@@ -36,7 +36,7 @@ export const createPost = (body) => {
 			{body}
 		).then(function (response) {
 			dispatch(createPostSuccess)
-			NavigationService.navigate('Home')
+			// NavigationService.navigate('Home')
 		}).catch(function (error) {
 			console.log("Error in creating a post: ", error)
 			dispatch(createPostFailure)

@@ -1,8 +1,5 @@
-import {AsyncStorage} from 'react-native';
-import NavigationService from '../components/NavigationService';
-
-const axios = require('axios')
-
+import axios from 'axios'
+import history from '../history'
 
 const LOGIN_REQUEST = 'LOGIN_REQUEST'
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -80,14 +77,16 @@ export const logoutRequest = () => {
 export const login = (credentials) => {
     return function(dispatch) {
         dispatch(loginRequest);
-        return axios.post("http://192.168.0.20:3000/users/login",
+        return axios.post("http://localhost:3000/users/login",
             credentials
             )
             .then(function (response) {
                     dispatch(loginSuccess(response.data.user, response.data.token))
-                    AsyncStorage.setItem('token', response.data.token)
+                    localStorage.setItem('token', response.data.token)
+                    // AsyncStorage.setItem('token', response.data.token)
                     axios.defaults.headers.common.authorization = `Bearer ${response.data.token}`
-                    NavigationService.navigate("AuthLoading")
+                    // NavigationService.navigate("AuthLoading")
+                    history.push('/home')
                 }
             ).catch(function (error) {
                     console.log('An error has occured with the authentication', error)
@@ -103,9 +102,11 @@ export const logout = (user, token) => {
         dispatch(logoutRequest)
         return axios.post("http://localhost:3000/users/logout")
             .then(function(response) {
-                AsyncStorage.clear().then(function() {
-                    NavigationService.navigate("AuthLoading")
-                })
+                localStorage.clear()
+                history.push('/login')
+                    // AsyncStorage.clear().then(function() {
+                    // NavigationService.navigate("AuthLoading")
+                    console.log(response)
             }).catch(function (error) {
                 console.log("Failed logout", error)
             })
@@ -139,9 +140,11 @@ export const signUp = (user) => {
             .then(function (response) {
                     console.log("Created user ", response);
                     axios.defaults.headers.common.authorization = `Bearer ${response.data.token}`
-                    AsyncStorage.setItem('token', response.data.token)
+                    localStorage.setItem('token', response.data.token)
+                    // AsyncStorage.setItem('token', response.data.token)
                     dispatch(userCreateSuccess);
-                    NavigationService.navigate("AuthLoading")
+                    history.push('/home')
+                    // NavigationService.navigate("AuthLoading")
                 }
             ).catch(function(error) {
                     console.log('An error has occured with creating user', error)

@@ -1,0 +1,23 @@
+.iconImage {
+    width: 40;
+    height: 40;
+}
+.postHeaderContainer {
+    display: "flex";
+    flex-wrap: "nowrap";
+    flex-direction: "row";
+    padding-left: 10;
+    padding-right: 10;
+    padding-bottom: 10;
+}
+.postHeader {
+    display: "flex";
+    flex-direction: "column";
+    border-color: "black";
+}
+.postHeaderText {
+    flex-grow: 1;
+}
+.postHeaderDate {
+    color: "grey";
+}

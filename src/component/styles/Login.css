@@ -1,0 +1,9 @@
+h1 {
+    text-align: center;
+    width: 300px;
+    color: grey
+}
+
+.grey-container {
+    background-color: #2b3137;
+}

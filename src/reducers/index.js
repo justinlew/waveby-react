@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { reducer as form } from 'redux-form'
 
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOGIN_REQUEST = 'LOGIN_REQUEST'
@@ -139,5 +140,6 @@ const post = (state = initialState, action) => {
 export default combineReducers({
 	authentication,
 	user,
-	post
+	post,
+	form
 })
