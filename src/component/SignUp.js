@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import { View, TextInput, Text, TouchableOpacity, ImageBackground, Button, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
+import './styles/Login.css'
 // import { styles } from './common/styles';
 import { signUp } from '../actions'
 import Container from '@material-ui/core/Container'
@@ -34,6 +35,9 @@ class SignUp extends Component {
         return (
             <Box
                 mt={10}
+                pt={5}
+                pb={5}
+                className="grey-container"
             >
                 <Grid
                     container
