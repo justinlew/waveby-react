@@ -19,7 +19,6 @@ class LoginForm extends React.Component {
 
     onSubmit(formValues) {
         console.log(formValues)
-        history.push('/home')
         this.props.login(formValues)
     }
 
@@ -33,7 +32,7 @@ class LoginForm extends React.Component {
                 <Box
                     p={2}
                 >
-                    <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+                    <form className="auth-form-container" onSubmit={this.props.handleSubmit(this.onSubmit)}>
                         <Box
                             mb={2}
                         >

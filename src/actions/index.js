@@ -1,4 +1,4 @@
-import axios from 'axios'
+import API from './API'
 import history from '../history'
 
 const LOGIN_REQUEST = 'LOGIN_REQUEST'
@@ -37,7 +37,7 @@ export const userEdit = (user) => {
     console.log("Editting user", JSON.stringify(user))
     return function(dispatch) {
         dispatch(userEditRequest)
-        return axios.patch("http://localhost:3000/users/me", user)
+        return API.patch("/users/me", user)
             .then(function(response) {
                 dispatch(userEditSuccess(response.data.user))
             }).catch(function(error) {
@@ -77,15 +77,14 @@ export const logoutRequest = () => {
 export const login = (credentials) => {
     return function(dispatch) {
         dispatch(loginRequest);
-        return axios.post("http://localhost:3000/users/login",
+        return API.post("/users/login",
             credentials
             )
             .then(function (response) {
                     dispatch(loginSuccess(response.data.user, response.data.token))
                     localStorage.setItem('token', response.data.token)
                     // AsyncStorage.setItem('token', response.data.token)
-                    axios.defaults.headers.common.authorization = `Bearer ${response.data.token}`
-                    // NavigationService.navigate("AuthLoading")
+                    API.defaults.headers.common.authorization = `Bearer ${response.data.token}`
                     history.push('/home')
                 }
             ).catch(function (error) {
@@ -100,7 +99,7 @@ export const logout = (user, token) => {
     console.log("Logging out")
     return function(dispatch) {
         dispatch(logoutRequest)
-        return axios.post("http://localhost:3000/users/logout")
+        return API.post("/users/logout")
             .then(function(response) {
                 localStorage.clear()
                 history.push('/login')
@@ -134,12 +133,12 @@ export const userCreateRequest = () => {
 export const signUp = (user) => {
     return function(dispatch) {
         dispatch(userCreateRequest);
-        return axios.post("http://localhost:3000/users",
+        return API.post("/users",
                 user
             )
             .then(function (response) {
                     console.log("Created user ", response);
-                    axios.defaults.headers.common.authorization = `Bearer ${response.data.token}`
+                    API.defaults.headers.common.authorization = `Bearer ${response.data.token}`
                     localStorage.setItem('token', response.data.token)
                     // AsyncStorage.setItem('token', response.data.token)
                     dispatch(userCreateSuccess);

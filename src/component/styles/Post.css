@@ -1,6 +1,9 @@
 .iconImage {
-    width: 40;
-    height: 40;
+    width: 75px;
+    height: 75px;
+}
+.iconCol {
+    align: right;
 }
 .postHeaderContainer {
     display: "flex";

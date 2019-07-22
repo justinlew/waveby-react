@@ -1,7 +1,7 @@
 // import {AsyncStorage} from 'react-native';
 // import NavigationService from '../../components/NavigationService';
 
-const axios = require('axios')
+import API from '../API'
 
 const CREATE_POST_REQUEST = "CREATE_POST_REQUEST"
 const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS'
@@ -11,15 +11,20 @@ const FETCH_POSTS_REQUEST = "FETCH_POSTS_REQUEST"
 const FETCH_POSTS_SUCCESS = "FETCH_POSTS_SUCCESS"
 const FETCH_POSTS_FAILURE = "FETCH_POSTS_FAILURE"
 
+const DELETE_POST_REQUEST = "DELETE_POST_REQUEST"
+const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS"
+const DELETE_POST_FAILURE = "DELETE_POST_FAILURE"
+
 const createPostRequest = () => {
 	return {
 		type: CREATE_POST_REQUEST
 	}
 }
 
-const createPostSuccess = () => {
+const createPostSuccess = (post) => {
 	return {
-		type: CREATE_POST_SUCCESS
+		type: CREATE_POST_SUCCESS,
+		post
 	}
 }
 
@@ -32,10 +37,11 @@ const createPostFailure = () => {
 export const createPost = (body) => {
 	return function(dispatch) {
 		dispatch(createPostRequest)
-		return axios.post('http://localhost:3000/posts',
+		return API.post('/posts',
 			{body}
 		).then(function (response) {
-			dispatch(createPostSuccess)
+			console.log(response.data)
+			dispatch(createPostSuccess(response.data))
 			// NavigationService.navigate('Home')
 		}).catch(function (error) {
 			console.log("Error in creating a post: ", error)
@@ -64,9 +70,10 @@ const fetchPostsFailure = () => {
 }
 
 export const fetchPosts = () => {
+	console.log("Fethcing posts with token: ", localStorage.getItem('token'))
 	return function(dispatch) {
 		dispatch(fetchPostsRequest())
-		return axios.get("http://localhost:3000/posts")
+		return API.get("/posts")
 			.then(function (response) {
 				dispatch(fetchPostsSuccess(response.data))
 			}).catch(function (error) {
@@ -76,5 +83,36 @@ export const fetchPosts = () => {
 	}
 }
 
+const deletePostRequest = () => {
+	return {
+		type: DELETE_POST_REQUEST
+	}
+}
 
+const deletePostSuccess = (post) => {
+	return {
+		type: DELETE_POST_SUCCESS,
+		post
+	}
+}
 
+const deletePostFailure = () => {
+	return {
+		type: DELETE_POST_FAILURE
+	}
+}
+
+export const deletePost = (post) => {
+	console.log("Deleting post", post)
+	return function(dispatch) {
+		dispatch(deletePostRequest)
+		return API.delete(`/posts/${post._id}`)
+			.then(function(response) {
+				console.log(response)
+				dispatch(deletePostSuccess(response.data))
+			}).catch(function(error) {
+				console.log("An error has occured when deleting a post", error)
+				dispatch(deletePostFailure)
+			})
+	}
+}

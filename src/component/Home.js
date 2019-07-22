@@ -1,39 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import FAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { bindActionCreators } from 'redux'
 import { logout } from '../actions'
-// import { createBottomTabNavigator, withNavigation } from 'react-navigation'
+import PostList from './PostList'
 import Post from './Post'
-// import { styles } from './common/styles'
+import CreatePostForm from './CreatePostForm'
 import { fetchPosts } from '../actions/post'
-// import AddPost from './Posts/AddPost'
 
 class Home extends Component {
-	// static navigationOptions = ({navigation}) => {
-	// 	const { params } = navigation.state
-	// 	return {
-	// 		headerTitle: "Waveby",
-	// 		headerRight: (
-	// 			<Button
-	// 				onPress={() => params.logout()}
-	// 				title="Logout"
-	// 				color="blue"
-	// 			/>
-	// 	)}
-	// }
+
+	PostListItem(props) {
+		return (
+			<li>
+				{props.value}
+			</li>
+		)
+	}
 
 	constructor(props) {
 		super(props)
-		this.state = {
-			user: {
-				_id: "",
-				email: ""
-			},
-			posts: []
-		}
 		this.logout = this.logout.bind(this)
-		// this.props.navigation.setParams({logout: this.logout})
 	}
 
 	logout = () => {
@@ -44,48 +30,34 @@ class Home extends Component {
 		this.props.fetchPosts()
 	}
 
+	// componentDidUpdate() {
+	// 	this.props.fetchPosts()
+	// }
+
 	render() {
 		const { posts } = this.props
-		console.log(JSON.stringify(posts))
+		const listItems = posts.slice(0).reverse().map((post) => {
+			return (
+				<li>
+					<div className="card">
+						<Post {...post}/> 
+					</div>
+				</li>
+			);
+		})
 		return (
-			<Post author="Justin Lew" createdBy="July 19 2019" body="Lorem ipsum"/>
-			
+			<div>
+				<CreatePostForm />
+				<ul className="list-group">{listItems}</ul>
+			</div>
 		)
 	}
-
-	// render() {
-	// 	return (
-	// 		<View
-	// 			style={styles.homeContainer}
-	// 		>
-	// 			<Text></Text>				
-	// 			<FlatList
-	// 				data={this.props.posts}
-	// 				renderItem={({item}) => (
-	// 					<Post
-	// 						author={item.email}
-	// 						createdBy={item.created_by}
-	// 						body={item.body}
-	// 					/>
-	// 				)}
-	// 				keyExtractor={(item, index) => item._id}
-	// 				refreshControl={
-	// 					<RefreshControl
-	// 		              refreshing={this.props.isFetchingPosts}
-	// 		              onRefresh={() => this.props.fetchPosts()}
-	// 		            />
-	// 				}
-	// 			/>
-	// 		</View>
-	// 	);
-	// }
 }
 
 const mapStateToProps = (state) => {
 	const { user, token } = state.authentication
-	const { posts, isFetchingPosts } = state.post
-	// console.log("returningmapStateToProps: ", { user, token, posts})
-	return { user, token, posts, isFetchingPosts}
+	const { posts, isPosting, isFetchingPosts, isDeletingPost } = state.post
+	return { user, token, posts, isPosting, isFetchingPosts, isDeletingPost }
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 
-
 import './styles/Login.css'
 
 import { login } from '../actions';
@@ -17,19 +16,6 @@ class Login extends React.Component {
             email: "",
             password: ""
         };
-        this.onLoginSubmit = this.onLoginSubmit.bind(this);
-    }
-
-    
-
-    // onLoginSubmit(value) {
-    //     console.log(value)
-    //     // this.props.login(this.state);
-    // }
-
-    onLoginSubmit = (credentials) => {
-        console.log(JSON.stringify(credentials))
-        // this.props.login(credentials)
     }
 
     render() {
@@ -47,7 +33,7 @@ class Login extends React.Component {
                     alignItems="center"
                 >
                     <h1>Waveby</h1>
-                    <LoginForm onSubmit={this.onLoginSubmit}/>
+                    <LoginForm/>
                 </Grid>
             </Box>
         );

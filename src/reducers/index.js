@@ -22,6 +22,10 @@ const USER_EDIT_SUCCESS = 'USER_EDIT_SUCCESS'
 const USER_EDIT_REQUEST = 'USER_EDIT_REQUEST'
 const USER_EDIT_FAILURE = 'USER_EDIT_FAILURE'
 
+const DELETE_POST_REQUEST = "DELETE_POST_REQUEST"
+const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS"
+const DELETE_POST_FAILURE = "DELETE_POST_FAILURE"
+
 
 const initialState = {
 	user: {},
@@ -29,6 +33,7 @@ const initialState = {
 	isAuthenticated: false,
 	isFetchingPosts: false,
 	isEdittingUser: false,
+	isDeletingPost: false,
 	posts: []
 }
 
@@ -131,6 +136,22 @@ const post = (state = initialState, action) => {
 			return {
 				...state,
 				isFetchingPosts: false
+			}
+		case DELETE_POST_REQUEST:
+			return {
+				...state,
+				isDeletingPost: true
+			}
+		case DELETE_POST_SUCCESS:
+			return {
+				...state,
+				isDeletingPost: false,
+				posts: state.posts.slice(0).filter(post => post._id !== action.post._id)
+			}
+		case DELETE_POST_FAILURE:
+			return {
+				...state,
+				isDeletingPost: false
 			}
 		default:
 			return state
