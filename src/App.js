@@ -7,7 +7,7 @@ import history from './history'
 import Home from './component/Home'
 import SignUp from './component/SignUp'
 
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction'
 
 
 import logo from './logo.svg'
