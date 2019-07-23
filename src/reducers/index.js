@@ -9,6 +9,7 @@ const LOGOUT = 'LOGOUT'
 const USER_CREATE_SUCCESS = 'USER_CREATE_SUCCESS'
 const USER_CREATE_REQUEST = 'USER_CREATE_REQUEST'
 const USER_CREATE_FAILURE = 'USER_CREATE_FAILURE'
+const USER_CREATE_PASSWORD_CONFIRMED = 'USER_CREATE_PASSWORD_CONFIRMED'
 
 const CREATE_POST_REQUEST = "CREATE_POST_REQUEST"
 const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS'
@@ -29,11 +30,13 @@ const DELETE_POST_FAILURE = "DELETE_POST_FAILURE"
 
 const initialState = {
 	user: {},
+	isPasswordMismatch: false,
 	isFetching: false,
 	isAuthenticated: false,
 	isFetchingPosts: false,
 	isEdittingUser: false,
 	isDeletingPost: false,
+	signUpErrors: {},
 	posts: []
 }
 
@@ -85,7 +88,8 @@ const user = (state = initialState, action) => {
 		case USER_CREATE_FAILURE:
 			return {
 				...state,
-				isFetching: false
+				isFetching: false,
+				signUpErrors: action.signUpErrors
 			}
 		case USER_EDIT_FAILURE: 
 			return {
@@ -97,11 +101,6 @@ const user = (state = initialState, action) => {
 				...state,
 				isEdittingUser: false,
 				user: action.user
-			}
-		case USER_CREATE_REQUEST:
-			return {
-				...state,
-				isEdittingUser: true
 			}
 		default:
 			return state

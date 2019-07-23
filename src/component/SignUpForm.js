@@ -9,16 +9,18 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
-
+const required = value => value ? undefined : 'Required'
 
 class SignUpForm extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            isPasswordConfirmed: true
+        }
         this.onSubmit = this.onSubmit.bind(this)
     }
 
     onSubmit(formValues) {
-        console.log(formValues)
         this.props.signUp(formValues)
     }
 
@@ -36,22 +38,22 @@ class SignUpForm extends React.Component {
                         <Box
                             mb={2}
                         >
-                            <Field name="name" component={this.renderInput} type="text" label="Name"/>
+                            <Field name="name" component={this.renderInput} type="text" label="Name" validate={[required]}/>
                         </Box>
                         <Box
                             mb={2}
                         >
-                            <Field name="email" component={this.renderInput} type="text" label="Email"/>
+                            <Field name="email" component={this.renderInput} type="text" label="Email" validate={[required]}/>
                         </Box>
                         <Box
                             mb={2}
                         >
-                            <Field name="password" component={this.renderInput} type="text" label="Password"/>
+                            <Field name="password" component={this.renderInput} type="text" label="Password" validate={[required]}/>
                         </Box>
                         <Box
                             mb={2}
                         >
-                            <Field name="passwordConfirmation" component={this.renderInput} type="text" label="Confirm password"/>
+                            <Field name="passwordConfirmation" component={this.renderInput} type="text" label="Confirm password" validate={[required]}/>
                         </Box>
                         <Box
                         >
@@ -64,6 +66,7 @@ class SignUpForm extends React.Component {
                                 Sign Up
                             </Button>
                         </Box>
+                        
                         <Box>
                             <p>Have an account? <Link to='/login'>Login.</Link></p>
                         </Box>

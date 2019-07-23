@@ -6,6 +6,7 @@ import PostList from './PostList'
 import Post from './Post'
 import CreatePostForm from './CreatePostForm'
 import { fetchPosts } from '../actions/post'
+import './styles/Post.css'
 
 class Home extends Component {
 
@@ -38,7 +39,7 @@ class Home extends Component {
 		const { posts } = this.props
 		const listItems = posts.slice(0).reverse().map((post) => {
 			return (
-				<li>
+				<li className="mb-2">
 					<div className="card">
 						<Post {...post}/> 
 					</div>
@@ -46,9 +47,16 @@ class Home extends Component {
 			);
 		})
 		return (
+
 			<div>
+				<nav className="navbar navbar-expand-lg navbar-light bg-light">
+					<a className="navbar-brand" href="#">Waveby</a>
+					<div className="collapse navbar-collapse my-2 my-lg-0 justify-content-end" id="navbarSupportedContent">	
+						<button className="btn btn-secondary my-2 my-sm-0" type="submit" onClick={this.logout}>Logout</button>
+					</div>
+				</nav>
 				<CreatePostForm />
-				<ul className="list-group">{listItems}</ul>
+				<ul className="list-group" id="post-list">{listItems}</ul>
 			</div>
 		)
 	}

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
+import './styles/Post.css'
 
 import { createPost } from '../actions/post'
 
@@ -19,10 +20,12 @@ class CreatePostForm extends React.Component {
         	value={formProps.input.value}
         	label={formProps.label}
         	placeholder="Is there something on your mind?"
+			id="new-post"
         />
     }
 
     onSubmit(formValues) {
+		console.log(formValues)
         this.props.createPost(formValues.body)
     }
 
@@ -31,7 +34,10 @@ class CreatePostForm extends React.Component {
     		<div>
     			<form onSubmit={this.props.handleSubmit(this.onSubmit)}>
     				<Field name="body" component={this.renderInput} type="text" label="Post" />
-    				<button type="submit" className="btn btn-primary">Submit Post</button>
+					<div className="d-flex justify-content-end">
+						<button type="submit" className="btn btn-primary m-2">Submit Post</button>
+					</div>
+    				
     			</form>
     		</div>
     	)
@@ -40,12 +46,6 @@ class CreatePostForm extends React.Component {
 
 const mapStateToProps = (state) => ({
 });
-
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         login: credentials => dispatch(login(credentials)) 
-//     }
-// }
 
 const mapDispatchToProps = dispatch => {
 	return {

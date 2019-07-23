@@ -9,6 +9,7 @@ const LOGOUT = 'LOGOUT'
 const USER_CREATE_SUCCESS = 'USER_CREATE_SUCCESS'
 const USER_CREATE_REQUEST = 'USER_CREATE_REQUEST'
 const USER_CREATE_FAILURE = 'USER_CREATE_FAILURE'
+const USER_CREATE_PASSWORD_CONFIRMED = 'USER_CREATE_PASSWORD_CONFIRMED'
 
 const USER_EDIT_SUCCESS = 'USER_EDIT_SUCCESS'
 const USER_EDIT_REQUEST = 'USER_EDIT_REQUEST'
@@ -103,6 +104,7 @@ export const logout = (user, token) => {
             .then(function(response) {
                 localStorage.clear()
                 history.push('/login')
+                API.defaults.headers.common.authorization = ''
                     // AsyncStorage.clear().then(function() {
                     // NavigationService.navigate("AuthLoading")
                     console.log(response)
@@ -118,9 +120,10 @@ export const userCreateSuccess = () => {
     }
 }
 
-export const userCreateFailure = () => {
+export const userCreateFailure = (signUpErrors) => {
     return {
-        type: USER_CREATE_FAILURE
+        type: USER_CREATE_FAILURE,
+        signUpErrors
     }
 }
 
@@ -137,17 +140,15 @@ export const signUp = (user) => {
                 user
             )
             .then(function (response) {
-                    console.log("Created user ", response);
+                    console.log('SignUp response', response)
                     API.defaults.headers.common.authorization = `Bearer ${response.data.token}`
                     localStorage.setItem('token', response.data.token)
-                    // AsyncStorage.setItem('token', response.data.token)
                     dispatch(userCreateSuccess);
                     history.push('/home')
-                    // NavigationService.navigate("AuthLoading")
                 }
             ).catch(function(error) {
                     console.log('An error has occured with creating user', error)
-                    dispatch(userCreateFailure);
+                    dispatch(userCreateFailure(error.errors));
                 }
             )
     }

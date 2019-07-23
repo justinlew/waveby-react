@@ -44,7 +44,7 @@ export const createPost = (body) => {
 			dispatch(createPostSuccess(response.data))
 			// NavigationService.navigate('Home')
 		}).catch(function (error) {
-			console.log("Error in creating a post: ", error)
+			console.log("Error in creating a post: ", error.response)
 			dispatch(createPostFailure)
 		})
 	}
