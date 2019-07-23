@@ -84,8 +84,6 @@ export const login = (credentials) => {
             .then(function (response) {
                     dispatch(loginSuccess(response.data.user, response.data.token))
                     localStorage.setItem('token', response.data.token)
-                    // AsyncStorage.setItem('token', response.data.token)
-                    API.defaults.headers.common.authorization = `Bearer ${response.data.token}`
                     history.push('/home')
                 }
             ).catch(function (error) {
@@ -104,10 +102,6 @@ export const logout = (user, token) => {
             .then(function(response) {
                 localStorage.clear()
                 history.push('/login')
-                API.defaults.headers.common.authorization = ''
-                    // AsyncStorage.clear().then(function() {
-                    // NavigationService.navigate("AuthLoading")
-                    console.log(response)
             }).catch(function (error) {
                 console.log("Failed logout", error)
             })
@@ -140,8 +134,6 @@ export const signUp = (user) => {
                 user
             )
             .then(function (response) {
-                    console.log('SignUp response', response)
-                    API.defaults.headers.common.authorization = `Bearer ${response.data.token}`
                     localStorage.setItem('token', response.data.token)
                     dispatch(userCreateSuccess);
                     history.push('/home')
