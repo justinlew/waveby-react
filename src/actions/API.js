@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { createConfigItem } from '@babel/core';
 
 const development = process.env.NODE_ENV !== 'production'
 
+console.log("process.env.NODE_ENV", process.env.NODE_ENV)
 console.log("Is development ", development)
 
 const API = axios.create({
