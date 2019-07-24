@@ -35,7 +35,7 @@ class CreatePostForm extends React.Component {
     			<form onSubmit={this.props.handleSubmit(this.onSubmit)}>
     				<Field name="body" component={this.renderInput} type="text" label="Post" />
 					<div className="d-flex justify-content-end">
-						<button type="submit" className="btn btn-primary m-2">Submit Post</button>
+						<button type="submit" className="btn btn-primary m-2 postSubmitButton">Submit Post</button>
 					</div>
     				
     			</form>

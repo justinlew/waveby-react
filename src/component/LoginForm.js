@@ -23,7 +23,7 @@ class LoginForm extends React.Component {
     }
 
     renderInput(formProps) {
-        return <TextField onChange={formProps.input.onChange} value={formProps.input.value} label={formProps.label}/>
+        return <TextField onChange={formProps.input.onChange} value={formProps.input.value} label={formProps.label} type={formProps.type}/>
     }
 
     render() {
@@ -41,7 +41,7 @@ class LoginForm extends React.Component {
                         <Box
                             mb={2}
                         >
-                            <Field name="password" component={this.renderInput} type="text" label="Password"/>
+                            <Field name="password" component={this.renderInput} type="password" label="Password"/>
                         </Box>
                         <Box
                         >

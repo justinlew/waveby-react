@@ -35,6 +35,19 @@ class Home extends Component {
 	// 	this.props.fetchPosts()
 	// }
 
+	NoPosts(props) {
+		return (
+			<li className="mb-2">
+				<div>
+					<div className="container-fluid rounded-lg pt-2 pb-1" id="post-container">
+						<p>Hey, I see you have no posts with us!</p>
+						<p>You can type stuff in the input above and click submit to get started :)</p>
+					</div>
+				</div>
+			</li>
+		)
+	}
+
 	render() {
 		const { posts } = this.props
 		const listItems = posts.slice(0).reverse().map((post) => {
@@ -46,11 +59,12 @@ class Home extends Component {
 				</li>
 			);
 		})
-		return (
 
+		console.log(listItems)
+		return (
 			<div>
-				<nav className="navbar navbar-expand-lg" id="navbar-gradient">
-					<div className="navbar-brand" id="waveby-title">Waveby</div>
+				<nav className="navbar navbar-expand-lg justify-content-between" id="navbar-gradient">
+					<div className="navbar-brand" id="waveby-title"><b>Waveby</b></div>
 					<div className="my-2 my-lg-0" id="navbarSupportedContent">	
 						<button className="btn btn-secondary" type="submit" onClick={this.logout}>Logout</button>
 					</div>

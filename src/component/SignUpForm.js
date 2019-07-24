@@ -25,7 +25,7 @@ class SignUpForm extends React.Component {
     }
 
     renderInput(formProps) {
-        return <TextField onChange={formProps.input.onChange} value={formProps.input.value} label={formProps.label}/>
+        return <TextField onChange={formProps.input.onChange} value={formProps.input.value} label={formProps.label} type={formProps.type}/>
     }
     
     render() {
@@ -48,12 +48,12 @@ class SignUpForm extends React.Component {
                         <Box
                             mb={2}
                         >
-                            <Field name="password" component={this.renderInput} type="text" label="Password" validate={[required]}/>
+                            <Field name="password" component={this.renderInput} type="password" label="Password" validate={[required]}/>
                         </Box>
                         <Box
                             mb={2}
                         >
-                            <Field name="passwordConfirmation" component={this.renderInput} type="text" label="Confirm password" validate={[required]}/>
+                            <Field name="passwordConfirmation" component={this.renderInput} type="password" label="Confirm password" validate={[required]}/>
                         </Box>
                         <Box
                         >

@@ -40,7 +40,10 @@
 }
 .postHeaderDate {
     color: #4c555a;
-
+}
+.postSubmitButton {
+    background-color: #8989ba;
+    border-color: #36364a;
 }
 #new-post {
     background-color: #4c555a;
