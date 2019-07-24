@@ -26,7 +26,7 @@ class Post extends Component {
 		const date = new Date(this.props.created_by)
 
 		return (
-			<div className="container">
+			<div className="container-fluid rounded-lg pt-2 pb-1" id="post-container">
 				<div className="row">
 					<div className="col">
 						<div className="d-inline-block">
@@ -35,8 +35,8 @@ class Post extends Component {
 							</div>
 						</div>
 						<div className="d-inline-block">
-							<div>{this.props.author.name}</div>
-							<div className="postHeaderDate">{date.toDateString()}</div>
+							<b>{this.props.author.name}</b>
+							<p className="postHeaderDate">{date.toDateString()}</p>
 						</div>
 						
 					</div>
@@ -52,7 +52,7 @@ class Post extends Component {
 					</div>
 				</div>
 				<div>
-					<p>{this.props.body}</p>
+					<span id="post-body">{this.props.body}</span>
 				</div>
 			</div>
 		)

@@ -40,7 +40,7 @@ class Home extends Component {
 		const listItems = posts.slice(0).reverse().map((post) => {
 			return (
 				<li className="mb-2">
-					<div className="card">
+					<div>
 						<Post {...post}/> 
 					</div>
 				</li>
@@ -49,14 +49,24 @@ class Home extends Component {
 		return (
 
 			<div>
-				<nav className="navbar navbar-expand-lg navbar-light bg-light">
-					<a className="navbar-brand" href="#">Waveby</a>
-					<div className="collapse navbar-collapse my-2 my-lg-0 justify-content-end" id="navbarSupportedContent">	
-						<button className="btn btn-secondary my-2 my-sm-0" type="submit" onClick={this.logout}>Logout</button>
+				<nav className="navbar navbar-expand-lg" id="navbar-gradient">
+					<div className="navbar-brand" id="waveby-title">Waveby</div>
+					<div className="my-2 my-lg-0" id="navbarSupportedContent">	
+						<button className="btn btn-secondary" type="submit" onClick={this.logout}>Logout</button>
 					</div>
 				</nav>
-				<CreatePostForm />
-				<ul className="list-group" id="post-list">{listItems}</ul>
+				<div className="container mt-4">
+					<div className="row">
+						<div className="col">
+						</div>
+						<div className="col-10">
+							<CreatePostForm />
+							<ul className="list-group" id="post-list">{listItems}</ul>
+						</div>
+						<div className="col">
+						</div>
+					</div>
+				</div>
 			</div>
 		)
 	}

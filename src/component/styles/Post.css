@@ -1,3 +1,20 @@
+#waveby-title {
+    color: white;
+}
+
+#post-container {
+    background-color: #2C2F33;
+    color: white;
+}
+
+#post-body { 
+    color: #d6dde1;
+}
+
+#navbar-gradient {
+    background-image: linear-gradient(to left, #868f96 0%, #596164 100%);
+}
+
 .iconImage {
     width: 75px;
     height: 75px;
@@ -22,5 +39,10 @@
     flex-grow: 1;
 }
 .postHeaderDate {
-    color: "grey";
+    color: #4c555a;
+
+}
+#new-post {
+    background-color: #4c555a;
+    border-color: #1e2224;
 }
