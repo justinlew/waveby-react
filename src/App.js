@@ -14,7 +14,6 @@ import logo from './logo.svg'
 import Login from './component/Login'
 import './App.css';
 import reducer from './reducers'
-import './axios'
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
