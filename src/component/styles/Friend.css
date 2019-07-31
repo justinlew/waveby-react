@@ -1,0 +1,20 @@
+.friend-icon {
+    height: 30px;
+    width: 30px;
+}
+
+.friend-name-container {
+    text-align: center;
+}
+
+.white {
+    color: white;
+}
+
+.friend-list-container {
+    border-bottom: 2px solid #4b4752;
+}
+
+.friend-list-container:hover {
+    background-color: #848c99;
+}

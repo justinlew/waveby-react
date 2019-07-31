@@ -2,8 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { logout } from '../actions'
+import { FaCaretDown } from 'react-icons/fa'
 import PostList from './PostList'
+import avatar from './public/avatar.png'
+
 import Post from './Post'
+import Friend from './Friend'
 import CreatePostForm from './CreatePostForm'
 import { fetchPosts } from '../actions/post'
 import './styles/Post.css'
@@ -30,10 +34,6 @@ class Home extends Component {
 	componentDidMount() {
 		this.props.fetchPosts()
 	}
-
-	// componentDidUpdate() {
-	// 	this.props.fetchPosts()
-	// }
 
 	NoPosts(props) {
 		return (
@@ -65,8 +65,15 @@ class Home extends Component {
 			<div>
 				<nav className="navbar navbar-expand-lg justify-content-between" id="navbar-gradient">
 					<div className="navbar-brand" id="waveby-title"><b>Waveby</b></div>
-					<div className="my-2 my-lg-0" id="navbarSupportedContent">	
-						<button className="btn btn-secondary" type="submit" onClick={this.logout}>Logout</button>
+					<div className="my-2 my-lg-0" id="navbarSupportedContent">
+						<div className="btn-group">
+							<button type="button" className="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img className="iconImage" alt="Profile picture" src={avatar} />
+							</button>
+							<div className="dropdown-menu dropdown-menu-right">
+								<a className="dropdown-item" onClick={this.logout}>Logout</a>
+							</div>
+						</div>
 					</div>
 				</nav>
 				<div className="container mt-4">
@@ -78,6 +85,19 @@ class Home extends Component {
 							<ul className="list-group" id="post-list">{listItems}</ul>
 						</div>
 						<div className="col">
+							<div className="friend-container dropdown">
+								<button className="btn btn-lg dropdown-toggle friend-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Friends
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<Friend />
+									<Friend />
+									<Friend />
+									<Friend />
+									<Friend />
+									
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

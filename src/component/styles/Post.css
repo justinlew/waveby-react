@@ -50,3 +50,16 @@
     border-color: #1e2224;
     color: #f3f3f8;
 }
+.friend-container {
+    background-color: #7289DA;
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+}
+.friend-button {
+    width: 300px;
+}
+.dropdown-menu {
+    width: 300px;
+    background-color: #2C2F33;
+}
