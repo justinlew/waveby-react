@@ -7,10 +7,6 @@ import Grid from '@material-ui/core/Grid'
 import SignUpForm from './SignUpForm'
 
 class SignUp extends Component {
-	constructor(props) {
-		super(props)
-	}
-
 	render() {
         return (
             <Box

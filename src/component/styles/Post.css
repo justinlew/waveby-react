@@ -61,5 +61,7 @@
 }
 .dropdown-menu {
     width: 300px;
+}
+.dropdown-menu-friends {
     background-color: #2C2F33;
 }
