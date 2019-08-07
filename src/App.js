@@ -2,15 +2,13 @@ import React from 'react'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
-import { Router, Switch, Route, Link } from 'react-router-dom'
+import { Router, Route } from 'react-router-dom'
 import history from './history'
 import Home from './component/Home'
 import SignUp from './component/SignUp'
 
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 
-
-import logo from './logo.svg'
 import Login from './component/Login'
 import './App.css';
 import reducer from './reducers'

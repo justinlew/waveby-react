@@ -5,8 +5,6 @@ import './styles/Post.css'
 
 import { createPost } from '../actions/post'
 
-import TextField from '@material-ui/core/TextField'
-
 class CreatePostForm extends React.Component {
 	constructor(props) {
 		super(props)

@@ -9,11 +9,47 @@ const LOGOUT = 'LOGOUT'
 const USER_CREATE_SUCCESS = 'USER_CREATE_SUCCESS'
 const USER_CREATE_REQUEST = 'USER_CREATE_REQUEST'
 const USER_CREATE_FAILURE = 'USER_CREATE_FAILURE'
-const USER_CREATE_PASSWORD_CONFIRMED = 'USER_CREATE_PASSWORD_CONFIRMED'
 
 const USER_EDIT_SUCCESS = 'USER_EDIT_SUCCESS'
-const USER_EDIT_REQUEST = 'USER_EDIT_REQUEST'
+// const USER_EDIT_REQUEST = 'USER_EDIT_REQUEST'
 const USER_EDIT_FAILURE = 'USER_EDIT_FAILURE'
+
+const SEARCH_USERS_SUCCESS = 'SEARCH_USERS_SUCCESS'
+const SEARCH_USERS_REQUEST = 'SEARCH_USERS_REQUEST'
+const SEARCH_USERS_FAILURE = 'SEARCH_USERS_FAILURE'
+
+const searchUsersSuccess = (searchedUsers) => {
+    return {
+        type: SEARCH_USERS_SUCCESS,
+        searchedUsers
+    }
+}
+
+const searchUsersRequest = () => {
+    return {
+        type: SEARCH_USERS_REQUEST
+    }
+}
+
+const searchUsersFailure = () => {
+    return {
+        type: SEARCH_USERS_FAILURE
+    }
+}
+
+export const searchUsers = (name) => {
+    return function(dispatch) {
+        dispatch(searchUsersRequest)
+        return API.get(`/users/query/${name}`)
+            .then(function(response) {
+                history.push('/home/searchUsers')
+                console.log('Searching users ', response.data)
+                dispatch(searchUsersSuccess(response.data))
+            }).catch(function(error) {
+                dispatch(searchUsersFailure)
+            })
+    }
+}
 
 const userEditSuccess = () => {
     return {
@@ -108,9 +144,11 @@ export const logout = (user, token) => {
     }
 }
 
-export const userCreateSuccess = () => {
+export const userCreateSuccess = (user, token) => {
     return {
-        type: USER_CREATE_SUCCESS
+        type: USER_CREATE_SUCCESS,
+        user,
+        token
     }
 }
 
@@ -134,11 +172,12 @@ export const signUp = (user) => {
                 user
             )
             .then(function (response) {
-                    localStorage.setItem('token', response.data.token)
-                    dispatch(userCreateSuccess);
-                    history.push('/home')
-                }
-            ).catch(function(error) {
+                console.log(response)
+                localStorage.setItem('token', response.data.token)
+                dispatch(userCreateSuccess(response.data.user, response.data.token));
+                history.push('/home')
+            })
+            .catch(function(error) {
                     console.log('An error has occured with creating user', error)
                     dispatch(userCreateFailure(error.errors));
                 }

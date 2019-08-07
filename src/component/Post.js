@@ -31,7 +31,7 @@ class Post extends Component {
 					<div className="col">
 						<div className="d-inline-block">
 							<div>
-								<img className="iconImage" src={avatar} />
+								<img className="iconImage" src={avatar} alt="Avatar icon"/>
 							</div>
 						</div>
 						<div className="d-inline-block">

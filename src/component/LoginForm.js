@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import './styles/LoginForm.css'
 import { login } from '../actions';
-import history from '../history'
 
 import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'

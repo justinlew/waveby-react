@@ -9,35 +9,45 @@ const LOGOUT = 'LOGOUT'
 const USER_CREATE_SUCCESS = 'USER_CREATE_SUCCESS'
 const USER_CREATE_REQUEST = 'USER_CREATE_REQUEST'
 const USER_CREATE_FAILURE = 'USER_CREATE_FAILURE'
-const USER_CREATE_PASSWORD_CONFIRMED = 'USER_CREATE_PASSWORD_CONFIRMED'
 
 const CREATE_POST_REQUEST = "CREATE_POST_REQUEST"
 const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS'
-const CREATE_POST_FAILURE = 'CREATE_POST_FAILURE'
+// const CREATE_POST_FAILURE = 'CREATE_POST_FAILURE'
 
 const FETCH_POSTS_REQUEST = "FETCH_POSTS_REQUEST"
 const FETCH_POSTS_SUCCESS = "FETCH_POSTS_SUCCESS"
 const FETCH_POSTS_FAILURE = "FETCH_POSTS_FAILURE"
 
 const USER_EDIT_SUCCESS = 'USER_EDIT_SUCCESS'
-const USER_EDIT_REQUEST = 'USER_EDIT_REQUEST'
+// const USER_EDIT_REQUEST = 'USER_EDIT_REQUEST'
 const USER_EDIT_FAILURE = 'USER_EDIT_FAILURE'
 
 const DELETE_POST_REQUEST = "DELETE_POST_REQUEST"
 const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS"
 const DELETE_POST_FAILURE = "DELETE_POST_FAILURE"
 
+const FETCH_FRIENDS_REQUEST = 'FETCH_FRIENDS_REQUEST'
+const FETCH_FRIENDS_SUCCESS = 'FETCH_FRIENDS_SUCCESS'
+const FETCH_FRIENDS_FAILURE = 'FETCH_FRIENDS_FAILURE'
+
+const SEARCH_USERS_SUCCESS = 'SEARCH_USERS_SUCCESS'
+const SEARCH_USERS_REQUEST = 'SEARCH_USERS_REQUEST'
+const SEARCH_USERS_FAILURE = 'SEARCH_USERS_FAILURE'
 
 const initialState = {
 	user: {},
+	searchedUsers: [],
+	isSearchingUsers: false,
 	isPasswordMismatch: false,
 	isFetching: false,
 	isAuthenticated: false,
 	isFetchingPosts: false,
 	isEdittingUser: false,
 	isDeletingPost: false,
+	isFetchingFriends: false,
 	signUpErrors: {},
-	posts: []
+	posts: [],
+	friends: []
 }
 
 const authentication = (state = initialState, action) => {
@@ -102,6 +112,22 @@ const user = (state = initialState, action) => {
 				isEdittingUser: false,
 				user: action.user
 			}
+		case SEARCH_USERS_SUCCESS:
+			return {
+				...state,
+				searchedUsers: action.searchedUsers,
+				isSearchingUsers: false
+			}
+		case SEARCH_USERS_REQUEST:
+			return {
+				...state,
+				isSearchingUsers: true
+			}
+		case SEARCH_USERS_FAILURE:
+			return {
+				...state,
+				isSearchingUsers: false
+			}
 		default:
 			return state
 	}
@@ -157,9 +183,32 @@ const post = (state = initialState, action) => {
 	}
 }
 
+const friend = (state = initialState, action) => {
+	switch (action.type) {
+		case FETCH_FRIENDS_REQUEST:
+			return {
+				...state,
+				isFetchingFriends: true
+			}
+		case FETCH_FRIENDS_SUCCESS:
+			return {
+				...state,
+				friends: action.friends
+			}
+		case FETCH_FRIENDS_FAILURE:
+			return {
+				...state,
+				isFetchingFriends: false
+			}
+		default:
+			return state
+	}
+}
+
 export default combineReducers({
 	authentication,
 	user,
 	post,
+	friend,
 	form
 })
