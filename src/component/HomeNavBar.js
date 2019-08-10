@@ -10,6 +10,7 @@ import history from '../history'
 class HomeNavBar extends Component {
     constructor(props) {
         super(props)
+        this.state = {search: ''}
         this.logout = this.logout.bind(this)
         this.searchingUsers = this.searchingUsers.bind(this)
     }
@@ -23,6 +24,7 @@ class HomeNavBar extends Component {
             history.push('/home')
         } else {
             this.props.searchUsers(event.target.value)
+            history.push(`/home/searchUsers/${event.target.value}`)
         } 
     }
 

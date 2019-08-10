@@ -18,6 +18,12 @@ class Home extends Component {
 		this.props.fetchFriends()
 	}
 
+	componentDidUpdate(prevProps) {
+		if (prevProps.friends.length !== this.props.friends.length) {
+			this.props.fetchFriends()
+		}
+	}
+
 	render() {
 		const { friends } = this.props
 
@@ -39,7 +45,7 @@ class Home extends Component {
 						</div>
 						<div className="col-10">
 							<Route exact path="/home" component={PostList} />
-							<Route path="/home/searchUsers" component={UserList} />
+							<Route path="/home/searchUsers/:query" component={UserList} />
 						</div>
 						<div className="col">
 

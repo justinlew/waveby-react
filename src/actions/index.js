@@ -42,8 +42,6 @@ export const searchUsers = (name) => {
         dispatch(searchUsersRequest)
         return API.get(`/users/query/${name}`)
             .then(function(response) {
-                history.push('/home/searchUsers')
-                console.log('Searching users ', response.data)
                 dispatch(searchUsersSuccess(response.data))
             }).catch(function(error) {
                 dispatch(searchUsersFailure)

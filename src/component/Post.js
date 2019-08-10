@@ -18,7 +18,6 @@ class Post extends Component {
 	}
 
 	removePost(post) {
-		console.log(post)
 		this.props.deletePost(post)
 	}
 

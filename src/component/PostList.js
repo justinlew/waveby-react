@@ -8,7 +8,6 @@ import Post from './Post'
 class PostList extends React.Component {
 
 	componentDidMount() {
-		console.log("HIHIHIHI")
 		this.props.fetchPosts()
 	}
 

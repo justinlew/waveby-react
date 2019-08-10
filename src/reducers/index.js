@@ -30,6 +30,10 @@ const FETCH_FRIENDS_REQUEST = 'FETCH_FRIENDS_REQUEST'
 const FETCH_FRIENDS_SUCCESS = 'FETCH_FRIENDS_SUCCESS'
 const FETCH_FRIENDS_FAILURE = 'FETCH_FRIENDS_FAILURE'
 
+const CREATE_FRIENDS_REQUEST = 'CREATE_FRIENDS_REQUEST'
+const CREATE_FRIENDS_SUCCESS = 'CREATE_FRIENDS_SUCCESS'
+const CREATE_FRIENDS_FAILURE = 'CREATE_FRIENDS_FAILURE'
+
 const SEARCH_USERS_SUCCESS = 'SEARCH_USERS_SUCCESS'
 const SEARCH_USERS_REQUEST = 'SEARCH_USERS_REQUEST'
 const SEARCH_USERS_FAILURE = 'SEARCH_USERS_FAILURE'
@@ -47,7 +51,8 @@ const initialState = {
 	isFetchingFriends: false,
 	signUpErrors: {},
 	posts: [],
-	friends: []
+	friends: [],
+	isCreatingFriend: false
 }
 
 const authentication = (state = initialState, action) => {
@@ -199,6 +204,22 @@ const friend = (state = initialState, action) => {
 			return {
 				...state,
 				isFetchingFriends: false
+			}
+		case CREATE_FRIENDS_REQUEST:
+			return {
+				...state,
+				isCreatingFriend: true
+			}
+		case CREATE_FRIENDS_SUCCESS:
+			return {
+				...state,
+				isCreatingFriend: false,
+				friends: [...state.friends, action.friend]
+			}
+		case CREATE_FRIENDS_FAILURE:
+			return {
+				...state,
+				isCreatingFriend: false
 			}
 		default:
 			return state
