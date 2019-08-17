@@ -2,17 +2,22 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Route } from 'react-router-dom'
+
 import PostList from './PostList'
-
-
 import Friend from './Friend'
 import HomeNavBar from './HomeNavBar'
+import Conversation from './Conversation'
+import history from '../history'
 
 import { fetchFriends } from '../actions/friend'
 import UserList from './UserList'
 import './styles/Post.css'
 
 class Home extends Component {
+	constructor(props) {
+		super(props)
+		this.handleFriendClick = this.handleFriendClick.bind(this)
+	}
 
 	componentDidMount() {
 		this.props.fetchFriends()
@@ -24,14 +29,21 @@ class Home extends Component {
 		}
 	}
 
+	handleFriendClick(conversation) {
+		console.log(conversation)
+		history.push(`/home/conversation/${conversation}`)
+	}
+
 	render() {
 		const { friends } = this.props
+		console.log("friends props: ", friends)
 
 		const friendsListItems = friends.map((friend) => {
 			let bIsUserSource = this.props.user._id === friend.user._id
 			let oFriend = bIsUserSource ? friend.user : friend.friend
+			let conversation = friend.conversation
 			return (
-				<Friend {...oFriend}/> 
+				<Friend {...oFriend} conversation={conversation} onClick={this.handleFriendClick}/> 
 			)
 		})
 
@@ -46,6 +58,7 @@ class Home extends Component {
 						<div className="col-10">
 							<Route exact path="/home" component={PostList} />
 							<Route path="/home/searchUsers/:query" component={UserList} />
+							<Route path="/home/conversation/:id" component={Conversation} />
 						</div>
 						<div className="col">
 

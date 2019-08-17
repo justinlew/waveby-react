@@ -7,10 +7,6 @@ import { createFriend, fetchFriends } from '../actions/friend'
 import { IoIosShareAlt } from 'react-icons/io'
 import { FaUserPlus, FaUserFriends } from 'react-icons/fa'
 
-function AddFriend() {
-
-}
-
 class UserList extends React.Component {
     constructor(props) {
         super(props)
