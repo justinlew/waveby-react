@@ -53,7 +53,7 @@ class Home extends Component {
 			return false
 		}).map(friend => {
 			let bIsUserSource = this.props.user._id === friend.user._id
-			let oFriend = bIsUserSource ? friend.user : friend.friend
+			let oFriend = bIsUserSource ? friend.friend : friend.user
 			let conversation = friend.conversation
 			return (<Link to={`/home/conversation/${conversation}`}><Friend {...oFriend} conversation={conversation} status={friend.status} isSourceUser={bIsUserSource}/></Link>)
 		})
@@ -64,7 +64,7 @@ class Home extends Component {
 			return false
 		}).map(friend => {
 			let bIsUserSource = this.props.user._id === friend.user._id
-			let oFriend = bIsUserSource ? friend.user : friend.friend
+			let oFriend = bIsUserSource ? friend.friend : friend.user
 			let conversation = friend.conversation
 			return (<Friend {...oFriend} conversation={conversation} status={friend.status} isSourceUser={bIsUserSource} id={friend._id} onIconClick={this.handleRequestIconClick} />)
 		})

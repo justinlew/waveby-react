@@ -43,6 +43,11 @@ class SignUpForm extends React.Component {
                         <Box
                             mb={2}
                         >
+                            <Field name="displayName" component={this.renderInput} type="text" label="Display Name" validate={[required]}/>
+                        </Box>
+                        <Box
+                            mb={2}
+                        >
                             <Field name="email" component={this.renderInput} type="text" label="Email" validate={[required]}/>
                         </Box>
                         <Box
