@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import _ from 'lodash'
 import CreatePostForm from './CreatePostForm'
 import { fetchPosts } from '../actions/post'
 import Post from './Post'
@@ -12,7 +13,8 @@ class PostList extends React.Component {
 	}
 
 	render() {
-		const { posts } = this.props
+		let { posts } = this.props
+		posts = _.orderBy(posts, ['created_by'], ['asc'])
 		const listItems = posts.slice(0).reverse().map((post) => {
 			return (
 				<li className="mb-2">

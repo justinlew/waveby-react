@@ -18,3 +18,8 @@
 .friend-list-container:hover {
     background-color: #848c99;
 }
+
+.dropdown-header-friend {
+    text-align: center;
+    color: #848c99;
+}

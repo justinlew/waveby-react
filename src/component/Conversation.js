@@ -1,29 +1,62 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import io from 'socket.io-client'
+import Message from './Message'
+import './styles/Conversation.css'
+import $ from 'jquery'
 
-export default class Conversation extends React.Component {
+class Conversation extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            message: ''
+            message: '',
+            messages: []
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleMessageReload = this.handleMessageReload.bind(this)
+        this.renderMessages = this.renderMessages.bind(this)
+        this.handleChatMessage = this.handleChatMessage.bind(this)
+    }
+
+    handleMessageReload(messages) {
+        console.log(messages)
+        this.setState({messages})
+    }
+
+    handleChatMessage(message) {
+        this.setState(state => {
+            const messages = state.messages.concat(message)
+            return {
+                messages
+            }
+        })
+    }
+
+    renderMessages() {
+        const { messages } = this.state
+        return messages.map((message) => {
+            return (<li>{message}</li>)
+        })
     }
 
     componentDidMount() {
-        this.socket = io('http://localhost:3000', {
+        const development = process.env.NODE_ENV !== 'production'
+        const url = development ? "http://localhost:3000" : "https://mighty-waters-11379.herokuapp.com"
+        this.socket = io(url, {
             query: {
                 token: localStorage.getItem('token'),
                 conversation: this.props.match.params.id
             }
         })
 
-        this.socket.emit('chat message', 'hello room ' + this.props.match.params.id)
+        this.socket.on('reload messages', messages => this.handleMessageReload(messages))
 
-        this.socket.on('chat message', function(data) {
-            console.log(data)
-        })
+        this.socket.on('chat message', message => this.handleChatMessage(message))
+    }
+
+    componentDidUpdate(prevProps) {
+        $("html").animate({ scrollTop: $(document).height()}, 'slow')
     }
 
     handleSubmit(event) {
@@ -37,13 +70,36 @@ export default class Conversation extends React.Component {
     }
 
     render() {
+        const list = this.state.messages.map((message, index) => {
+            if (message.author._id === this.props.user._id) {
+                return (<li className="message-list float-right background-blurple my-1" key={index}>
+                    <Message {...message}/>
+                </li>)
+            } else {
+                return (<li className="message-list float-left my-1" key={index}>
+                    <Message {...message}/>
+                </li>)
+            }
+        })
         return (
             <div>
-                {this.props.match.params.id}
+                <div ref='wrap'>
+                    <ul className="pl-0">
+                        {list}
+                    </ul>
+                </div>
                 <form onSubmit={this.handleSubmit} >
-                    <input type="text" name="message" onChange={this.handleChange}/>
+                    <input className="message-input" type="text" name="message" placeholder="Send a message" onChange={this.handleChange}/>
                 </form>
             </div>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    const { user, isFetchingUser } = state.user
+    const { token } = state.authentication
+	return { user, token, isFetchingUser }
+};
+
+export default connect(mapStateToProps)(Conversation)

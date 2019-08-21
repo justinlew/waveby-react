@@ -44,7 +44,7 @@ class Post extends Component {
 							<div className="dropdown dropleft">
 								<IoIosMore className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
 								<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<a onClick={() => this.removePost(this.props)} className="dropdown-item" href="#">Remove post</a>
+									<a href="#" onClick={() => this.removePost(this.props)} className="dropdown-item">Remove post</a>
 								</div>
 							</div>
 						</span>

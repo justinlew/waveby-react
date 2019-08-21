@@ -1,10 +1,15 @@
 import { combineReducers } from 'redux'
 import { reducer as form } from 'redux-form'
+import _ from 'lodash'
 
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOGIN_REQUEST = 'LOGIN_REQUEST'
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
 const LOGOUT = 'LOGOUT'
+
+const GET_CURRENT_USER_REQUEST = 'GET_CURRENT_USER_REQUEST'
+const GET_CURRENT_USER_SUCCESS = 'GET_CURRENT_USER_SUCCESS'
+const GET_CURRENT_USER_FAILURE = 'GET_CURRENT_USER_FAILURE'
 
 const USER_CREATE_SUCCESS = 'USER_CREATE_SUCCESS'
 const USER_CREATE_REQUEST = 'USER_CREATE_REQUEST'
@@ -38,7 +43,12 @@ const SEARCH_USERS_SUCCESS = 'SEARCH_USERS_SUCCESS'
 const SEARCH_USERS_REQUEST = 'SEARCH_USERS_REQUEST'
 const SEARCH_USERS_FAILURE = 'SEARCH_USERS_FAILURE'
 
+const UPDATE_FRIEND_SUCCESS = 'UPDATE_FRIEND_SUCCESS'
+const UPDATE_FRIEND_REQUEST = 'UPDATE_FRIEND_REQUEST'
+const UPDATE_FRIEND_FAILURE = 'UPDATE_FRIEND_FAILURE'
+
 const initialState = {
+	isFetchingUser: false,
 	user: {},
 	searchedUsers: [],
 	isSearchingUsers: false,
@@ -50,9 +60,10 @@ const initialState = {
 	isDeletingPost: false,
 	isFetchingFriends: false,
 	signUpErrors: {},
-	posts: [],
-	friends: [],
-	isCreatingFriend: false
+	posts: {},
+	friends: {},
+	isCreatingFriend: false,
+	isUpdatingFriend: false
 }
 
 const authentication = (state = initialState, action) => {
@@ -87,6 +98,22 @@ const authentication = (state = initialState, action) => {
 
 const user = (state = initialState, action) => {
 	switch (action.type) {
+		case GET_CURRENT_USER_REQUEST:
+			return {
+				...state,
+				isFetchingUser: true
+			}
+		case GET_CURRENT_USER_SUCCESS:
+			return {
+				...state,
+				user: action.user,
+				isFetchingUser: false
+			}
+		case GET_CURRENT_USER_FAILURE:
+			return {
+				...state,
+				isFetchingUser: false
+			}
 		case USER_CREATE_SUCCESS:
 			return {
 				...state,
@@ -146,10 +173,14 @@ const post = (state = initialState, action) => {
 				isPosting: true
 			}
 		case CREATE_POST_SUCCESS:
+			
 			return {
 				...state,
 				isPosting: false,
-				posts: [...state.posts, action.post]
+				posts: {
+					...state.posts,
+					[action.post._id]: action.post
+				}
 			}
 		case FETCH_POSTS_REQUEST:
 			return {
@@ -159,7 +190,7 @@ const post = (state = initialState, action) => {
 		case FETCH_POSTS_SUCCESS:
 			return {
 				...state,
-				posts: action.posts,
+				posts: _.mapKeys(action.posts, '_id'),
 				isFetchingPosts: false
 			}
 		case FETCH_POSTS_FAILURE:
@@ -176,7 +207,7 @@ const post = (state = initialState, action) => {
 			return {
 				...state,
 				isDeletingPost: false,
-				posts: state.posts.slice(0).filter(post => post._id !== action.post._id)
+				posts: _.omit(state.posts, action.post._id)
 			}
 		case DELETE_POST_FAILURE:
 			return {
@@ -198,7 +229,8 @@ const friend = (state = initialState, action) => {
 		case FETCH_FRIENDS_SUCCESS:
 			return {
 				...state,
-				friends: action.friends
+				isFetchingFriends: false,
+				friends: _.mapKeys(action.friends, '_id')
 			}
 		case FETCH_FRIENDS_FAILURE:
 			return {
@@ -214,12 +246,34 @@ const friend = (state = initialState, action) => {
 			return {
 				...state,
 				isCreatingFriend: false,
-				friends: [...state.friends, action.friend]
+				friends: {
+					...state.friends,
+					[action.friend._id]: action.friend
+				}
 			}
 		case CREATE_FRIENDS_FAILURE:
 			return {
 				...state,
 				isCreatingFriend: false
+			}
+		case UPDATE_FRIEND_REQUEST:
+			return {
+				...state,
+				isUpdatingFriend: true
+			}
+		case UPDATE_FRIEND_SUCCESS:
+			return {
+				...state,
+				isUpdatingFriend: false,
+				friends: {
+					...state.friends,
+					[action.friend._id]: action.friend
+				}
+			}
+		case UPDATE_FRIEND_FAILURE:
+			return {
+				...state,
+				isUpdatingFriend: false
 			}
 		default:
 			return state

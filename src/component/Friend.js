@@ -1,21 +1,38 @@
 import React from 'react'
 import avatar1 from './public/person-girl-flat.png'
 import './styles/Friend.css'
+import { FaUserPlus } from 'react-icons/fa'
 
 export default class Friend extends React.Component {
     onClick = () => {
-        this.props.onClick(this.props.conversation)
+        if (this.props.onClick) {
+            this.props.onClick(this.props.conversation)
+        }
+    }
+
+    onIconClick = () => {
+        this.props.onIconClick(this.props)
     }
 
     render() {
-        console.log("Friend props: ", this.props)
         return (
             <div className="container py-3 friend-list-container" onClick={this.onClick}>
                 <div className="row">
-                    <div className="col float-left friend-name-container">
-                        <img className="friend-icon mr-5" src={avatar1} alt="avatar"/> 
-                        <span className="align-middle white">{this.props.name}</span>
+                    <div className="col friend-name-container">
+                        <img className="friend-icon mr-3" src={avatar1} alt="avatar"/> 
+                        <span className="align-right white">{this.props.name}</span>
                     </div>
+                    {this.props.status === "requested" && !this.props.isSourceUser ? (
+                    <div className="col text-right">
+                        <button className="btn" onClick={this.onIconClick}>
+                            <FaUserPlus />
+                        </button>
+                    </div>) : undefined}
+                    {this.props.status === "requested" && this.props.isSourceUser ? (
+                        <button className="btn btn-sm btn-outline-secondary mr-2">
+                            Pending
+                        </button>
+                    ) : undefined}
                 </div>
             </div>
         )

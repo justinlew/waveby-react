@@ -8,6 +8,10 @@ const CREATE_FRIENDS_REQUEST = 'CREATE_FRIENDS_REQUEST'
 const CREATE_FRIENDS_SUCCESS = 'CREATE_FRIENDS_SUCCESS'
 const CREATE_FRIENDS_FAILURE = 'CREATE_FRIENDS_FAILURE'
 
+const UPDATE_FRIEND_SUCCESS = 'UPDATE_FRIEND_SUCCESS'
+const UPDATE_FRIEND_REQUEST = 'UPDATE_FRIEND_REQUEST'
+const UPDATE_FRIEND_FAILURE = 'UPDATE_FRIEND_FAILURE'
+
 const createFriendsRequest = () => {
 	return {
 		type: CREATE_FRIENDS_REQUEST
@@ -68,4 +72,35 @@ export const fetchFriends = () => {
             dispatch(fetchFriendsFailure)
         })
     }
+}
+
+const updateFriendRequest = () => {
+	return {
+		type: UPDATE_FRIEND_REQUEST
+	}
+}
+
+const updateFriendSuccess = (friend) => {
+	return {
+		type: UPDATE_FRIEND_SUCCESS,
+		friend
+	}
+}
+
+const updateFriendFailure = () => {
+	return {
+		type: UPDATE_FRIEND_FAILURE
+	}
+}
+
+export const updateFriend = (friend) => {
+	return function(dispatch) {
+		dispatch(updateFriendRequest)
+		return API.put(`/friends/${friend.id}`, friend)
+		.then(function (response) {
+			dispatch(updateFriendSuccess(response.data))
+		}).catch(function(error) {
+			dispatch(updateFriendFailure)
+		})
+	}
 }

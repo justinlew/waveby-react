@@ -6,6 +6,10 @@ const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOGIN_FAILURE = 'LOGIN_FAILURE'
 const LOGOUT = 'LOGOUT'
 
+const GET_CURRENT_USER_REQUEST = 'GET_CURRENT_USER_REQUEST'
+const GET_CURRENT_USER_SUCCESS = 'GET_CURRENT_USER_SUCCESS'
+const GET_CURRENT_USER_FAILURE = 'GET_CURRENT_USER_FAILURE'
+
 const USER_CREATE_SUCCESS = 'USER_CREATE_SUCCESS'
 const USER_CREATE_REQUEST = 'USER_CREATE_REQUEST'
 const USER_CREATE_FAILURE = 'USER_CREATE_FAILURE'
@@ -17,6 +21,37 @@ const USER_EDIT_FAILURE = 'USER_EDIT_FAILURE'
 const SEARCH_USERS_SUCCESS = 'SEARCH_USERS_SUCCESS'
 const SEARCH_USERS_REQUEST = 'SEARCH_USERS_REQUEST'
 const SEARCH_USERS_FAILURE = 'SEARCH_USERS_FAILURE'
+
+const getCurrentUserRequest = () => {
+    return {
+        type: GET_CURRENT_USER_REQUEST
+    }
+}
+
+const getCurrentUserSuccess = (user) => {
+    return {
+        type: GET_CURRENT_USER_SUCCESS,
+        user
+    }
+}
+
+const getCurrentUserFailure = () => {
+    return {
+        type: GET_CURRENT_USER_FAILURE
+    }
+}
+
+export const getCurrentUser = () => {
+    return function(dispatch) {
+        dispatch(getCurrentUserRequest)
+        return API.get('/users/profile')
+            .then(function(response) {
+                dispatch(getCurrentUserSuccess(response.data))
+            }).catch(function (error) {
+                dispatch(getCurrentUserFailure)
+            })
+    }
+}
 
 const searchUsersSuccess = (searchedUsers) => {
     return {

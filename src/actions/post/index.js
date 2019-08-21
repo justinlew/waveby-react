@@ -1,6 +1,6 @@
 // import {AsyncStorage} from 'react-native';
 // import NavigationService from '../../components/NavigationService';
-
+import { reset } from 'redux-form'
 import API from '../API'
 
 const CREATE_POST_REQUEST = "CREATE_POST_REQUEST"
@@ -42,6 +42,7 @@ export const createPost = (body) => {
 		).then(function (response) {
 			console.log(response.data)
 			dispatch(createPostSuccess(response.data))
+			dispatch(reset("create-post-form"))
 			// NavigationService.navigate('Home')
 		}).catch(function (error) {
 			console.log("Error in creating a post: ", error.response)
@@ -70,14 +71,12 @@ const fetchPostsFailure = () => {
 }
 
 export const fetchPosts = () => {
-	console.log("Fethcing posts with token: ", localStorage.getItem('token'))
 	return function(dispatch) {
 		dispatch(fetchPostsRequest())
 		return API.get("/posts")
 			.then(function (response) {
 				dispatch(fetchPostsSuccess(response.data))
 			}).catch(function (error) {
-				console.log("An error has occured when fetching user's posts ", error)
 				dispatch(fetchPostsFailure())
 			})
 	}

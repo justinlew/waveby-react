@@ -23,7 +23,6 @@ class HomeNavBar extends Component {
         if (!event.target.value) {
             history.push('/home')
         } else {
-            this.props.searchUsers(event.target.value)
             history.push(`/home/searchUsers/${event.target.value}`)
         } 
     }

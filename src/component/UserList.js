@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux'
 import avatar from './public/avatar.png'
 import { searchUsers } from '../actions'
 import { createFriend, fetchFriends } from '../actions/friend'
-import { IoIosShareAlt } from 'react-icons/io'
 import { FaUserPlus, FaUserFriends } from 'react-icons/fa'
 
 class UserList extends React.Component {
@@ -27,7 +26,6 @@ class UserList extends React.Component {
     }
 
     onAddFriendButtonPress(id) {
-        console.log("Button press: ", id)
         this.props.createFriend(id)
     }
 
@@ -35,7 +33,7 @@ class UserList extends React.Component {
         const { searchedUsers, friends } = this.props
         
 		const listItems = searchedUsers.slice(0).reverse().map((user) => {
-            const bIsFriend = friends.some((friend) => {
+            const bIsFriend = Object.values(friends).some((friend) => {
                 return friend.user._id === user._id || friend.friend._id === user._id
             })
 			return (

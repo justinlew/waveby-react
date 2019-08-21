@@ -65,3 +65,15 @@
 .dropdown-menu-friends {
     background-color: #2C2F33;
 }
+.iconImageMessage {
+    width: 25px;
+    height: 25px;
+}
+
+.message-list {
+    width: 80%
+}
+
+.message-list-owner {
+    float: right
+}
