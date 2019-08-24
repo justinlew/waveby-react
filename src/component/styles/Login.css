@@ -7,3 +7,7 @@ h1 {
 .grey-container {
     background-color: #99AAB5;
 }
+
+.auth-input-container {
+    width: 100%;
+}

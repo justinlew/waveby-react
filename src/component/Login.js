@@ -1,23 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 
 import './styles/Login.css'
 
-import { login } from '../actions';
 import LoginForm from './LoginForm'
 
 class Login extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            password: ""
-        };
-    }
-
     render() {
         return (
             <Box
@@ -40,13 +30,4 @@ class Login extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-});
-
-const mapDispatchToProps = dispatch => {
-    return {
-        login: credentials => dispatch(login(credentials)) 
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default Login

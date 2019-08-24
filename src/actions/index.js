@@ -43,12 +43,12 @@ const getCurrentUserFailure = () => {
 
 export const getCurrentUser = () => {
     return function(dispatch) {
-        dispatch(getCurrentUserRequest)
+        dispatch(getCurrentUserRequest())
         return API.get('/users/profile')
             .then(function(response) {
                 dispatch(getCurrentUserSuccess(response.data))
             }).catch(function (error) {
-                dispatch(getCurrentUserFailure)
+                dispatch(getCurrentUserFailure())
             })
     }
 }
@@ -74,12 +74,12 @@ const searchUsersFailure = () => {
 
 export const searchUsers = (name) => {
     return function(dispatch) {
-        dispatch(searchUsersRequest)
+        dispatch(searchUsersRequest())
         return API.get(`/users/query/${name}`)
             .then(function(response) {
                 dispatch(searchUsersSuccess(response.data))
             }).catch(function(error) {
-                dispatch(searchUsersFailure)
+                dispatch(searchUsersFailure())
             })
     }
 }
@@ -146,27 +146,25 @@ export const logoutRequest = () => {
 
 export const login = (credentials) => {
     return function(dispatch) {
-        dispatch(loginRequest);
+        dispatch(loginRequest());
         return API.post("/users/login",
             credentials
             )
             .then(function (response) {
-                    dispatch(loginSuccess(response.data.user, response.data.token))
-                    localStorage.setItem('token', response.data.token)
-                    history.push('/home')
-                }
+                dispatch(loginSuccess(response.data.user, response.data.token))
+                localStorage.setItem('token', response.data.token)
+                history.push('/home')
+            }
             ).catch(function (error) {
-                    console.log('An error has occured with the authentication', error)
-                    dispatch(loginFailure)
-                }
-            )
+                console.log('An error has occured with the authentication', error)
+                dispatch(loginFailure())
+            })
     }
 }
 
 export const logout = (user, token) => {
-    console.log("Logging out")
     return function(dispatch) {
-        dispatch(logoutRequest)
+        dispatch(logoutRequest())
         return API.post("/users/logout")
             .then(function(response) {
                 localStorage.clear()
@@ -200,21 +198,17 @@ export const userCreateRequest = () => {
 
 export const signUp = (user) => {
     return function(dispatch) {
-        dispatch(userCreateRequest);
-        return API.post("/users",
-                user
-            )
+        dispatch(userCreateRequest());
+        return API.post("/users", user)
             .then(function (response) {
-                console.log(response)
                 localStorage.setItem('token', response.data.token)
                 dispatch(userCreateSuccess(response.data.user, response.data.token));
                 history.push('/home')
             })
             .catch(function(error) {
-                    console.log('An error has occured with creating user', error)
-                    dispatch(userCreateFailure(error.errors));
-                }
-            )
+                console.log('An error has occured with creating user', error)
+                dispatch(userCreateFailure(error.errors));
+            })
     }
 }
 

@@ -27,8 +27,17 @@ class SignUpForm extends React.Component {
     renderInput(formProps) {
         return <TextField onChange={formProps.input.onChange} value={formProps.input.value} label={formProps.label} type={formProps.type}/>
     }
-    
+
+    renderLoadingIndicator() {
+        return (
+            <div className="spinner-border text-secondary" role="status">
+                <span className="sr-only">Loading...</span>
+            </div>
+        )
+    }
+
     render() {
+        const { isFetching } = this.props
         return (
             <Paper>
                 <Box
@@ -68,7 +77,7 @@ class SignUpForm extends React.Component {
                                 type="submit"
                                 fullWidth={true}
                             >
-                                Sign Up
+                                { isFetching ? this.renderLoadingIndicator() : "Sign Up"}
                             </Button>
                         </Box>
                         
@@ -82,9 +91,10 @@ class SignUpForm extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-
-});
+const mapStateToProps = (state) => {
+    const { isFetching } = state.user
+    return { isFetching }
+};
 
 const mapDispatchToProps = dispatch => {
     return {

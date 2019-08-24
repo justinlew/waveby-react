@@ -22,10 +22,20 @@ class LoginForm extends React.Component {
     }
 
     renderInput(formProps) {
-        return <TextField onChange={formProps.input.onChange} value={formProps.input.value} label={formProps.label} type={formProps.type}/>
+        return <TextField className="auth-input-container" onChange={formProps.input.onChange} value={formProps.input.value} label={formProps.label} type={formProps.type}/>
+    }
+
+    renderLoadingIndicator() {
+        return (
+            <div className="spinner-border text-secondary" role="status">
+                <span className="sr-only">Loading...</span>
+            </div>
+        )
     }
 
     render() {
+        const { isFetching } = this.props
+        console.log("isFetching: ", isFetching)
         return (
             <Paper>
                 <Box
@@ -50,7 +60,7 @@ class LoginForm extends React.Component {
                                 type="submit"
                                 fullWidth={true}
                             >
-                                Login
+                                { isFetching ? this.renderLoadingIndicator() : "Login"}
                             </Button>
                         </Box>
                         <Box>
@@ -61,11 +71,12 @@ class LoginForm extends React.Component {
             </Paper>
         )
     }
-    
 }
 
-const mapStateToProps = (state) => ({
-});
+const mapStateToProps = (state) => {
+    const { isFetching } = state.authentication
+    return { isFetching }
+}
 
 const mapDispatchToProps = dispatch => {
     return {
