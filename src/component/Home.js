@@ -12,6 +12,7 @@ import history from '../history'
 import { getCurrentUser } from '../actions'
 import { fetchFriends, updateFriend } from '../actions/friend'
 import UserList from './UserList'
+import EditProfile from './EditProfile'
 import './styles/Post.css'
 
 class Home extends Component {
@@ -93,6 +94,7 @@ class Home extends Component {
 							<Route exact path="/home" component={PostList} />
 							<Route path="/home/searchUsers/:query" component={UserList} />
 							<Route path="/home/conversation/:id" component={withRouter(Conversation)} />
+							<Route path="/home/editProfile" component={EditProfile} />
 						</div>
 						<div className="col">
 
@@ -114,7 +116,14 @@ const mapStateToProps = (state) => {
 	const { isFetchingUser, user } = state.user
 	const { token } = state.authentication
 	const { isFetchingFriends, friends, isUpdatingFriend } = state.friend
-	return { user, token, isFetchingFriends, friends, isUpdatingFriend, isFetchingUser }
+	return {
+		user,
+		token,
+		isFetchingFriends,
+		friends,
+		isUpdatingFriend,
+		isFetchingUser
+	}
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -11,6 +11,10 @@ const GET_CURRENT_USER_REQUEST = 'GET_CURRENT_USER_REQUEST'
 const GET_CURRENT_USER_SUCCESS = 'GET_CURRENT_USER_SUCCESS'
 const GET_CURRENT_USER_FAILURE = 'GET_CURRENT_USER_FAILURE'
 
+const POST_USER_AVATAR_REQUEST = 'POST_USER_AVATAR_REQUEST'
+const POST_USER_AVATAR_SUCCESS = 'POST_USER_AVATAR_SUCCESS'
+const POST_USER_AVATAR_FAILURE = 'POST_USER_AVATAR_FAILURE'
+
 const USER_CREATE_SUCCESS = 'USER_CREATE_SUCCESS'
 const USER_CREATE_REQUEST = 'USER_CREATE_REQUEST'
 const USER_CREATE_FAILURE = 'USER_CREATE_FAILURE'
@@ -49,6 +53,7 @@ const UPDATE_FRIEND_FAILURE = 'UPDATE_FRIEND_FAILURE'
 
 const initialState = {
 	isFetchingUser: false,
+	isUploadingAvatar: false,
 	user: {},
 	searchedUsers: [],
 	isSearchingUsers: false,
@@ -213,6 +218,22 @@ const post = (state = initialState, action) => {
 			return {
 				...state,
 				isDeletingPost: false
+			}
+		case POST_USER_AVATAR_REQUEST:
+			return {
+				...state,
+				isUploadingAvatar: true
+			}
+		case POST_USER_AVATAR_SUCCESS:
+			return {
+				...state,
+				user: action.user,
+				isUploadingAvatar: false
+			}
+		case POST_USER_AVATAR_FAILURE:
+			return {
+				...state,
+				isUploadingAvatar: false
 			}
 		default:
 			return state

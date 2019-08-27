@@ -1,137 +1,102 @@
 import React from 'react'
-import {
-	Text,
-	View,
-	Image,
-	TextInput,
-	Button
-} from 'react-native'
-import { withNavigation } from 'react-navigation'
+import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
-import FAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { styles } from './common/styles'
-import { userEdit } from '../actions'
+import $ from 'jquery'
+// import FAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+// import { styles } from './common/styles'
+import { userEdit, getCurrentUser } from '../actions'
+import { bindActionCreators } from 'redux';
+
+import ChangeAvatar from './ChangeAvatar'
+
+const required = value => value ? undefined : 'Required'
 
 class EditProfile extends React.Component {
-	static navigationOptions = ({navigation}) => {
-		const { params } = navigation.state
-		return {
-			headerTitle: "Waveby",
-			headerLeft: (
-				<Button
-					onPress={() => params.cancel()}
-					title="Cancel"
-					color="blue"
-				/>
-			),
-			headerRight: (
-				<Button
-					onPress={() => params.done()}
-					title="Done"
-					color="blue"
-				/>
-		)}
-	}
-
 	constructor(props) {
 		super(props)
-		console.log(props)
 		this.state = {
-			email: props.user.email,
 			name: props.user.name,
+			email: props.user.email,
 			displayName: props.user.displayName
 		}
-		this.cancel = this.cancel.bind(this)
+		this.onSubmit = this.onSubmit.bind(this)
 		this.onChangeProfilePhoto = this.onChangeProfilePhoto.bind(this)
 		this.onDonePress = this.onDonePress.bind(this)
-		this.props.navigation.setParams({done: this.onDonePress})
-		this.props.navigation.setParams({cancel: this.cancel})
 	}
 
-	cancel = () => {
-		console.log("Cancel")
+	componentDidMount() {
+		this.props.getCurrentUser()
 	}
 
 	onChangeProfilePhoto = () => {
 		console.log("Changing profile photo")
 	}
 
-	onDonePress = () => {
-		console.log("On done press")
+	onDonePress = (event) => {
+		event.preventDefault()
+		this.props.userEdit(this.state)
+	}
+
+	onSubmit() {
 		this.props.userEdit(this.state)
 	}
 
 	render() {
-		// const { name, email, displayName } = this.props
-		// const displayNameValue = displayName ? displayName : "Display Name"
-		const name = this.state.name
-		const displayNameValue = this.displayName ? this.displayName : "Display Name"
-		const email = this.state.email
+	
 		return (
-			<View
-				style={styles.editProfilePhotoContainer}
-			>
-				<Text>Edit Profile</Text>
-				<Image
-					source={require('../../assets/4296950-avatar-business-face-people-icon-people-icon-png-512_512.png')}
-					style={styles.editProfileIcon}
-				/>
-				<Button
-					style={styles.editProfilePhoto}
-					onPress={() => this.onChangeProfilePhoto()}
-					title="Change Profile Photo"
-				/>
-				<View style={styles.editProfileNameContainer}>
-					<View style={{...styles.editProfileNameLabel, ...styles.editProfileLabel}}>
-						<Text>Name</Text>
-					</View>
-					<TextInput
-						style={styles.editProfileNameInput}
-						onChangeText={(name) => this.setState({name})}
-						placeholder={name}
-					/>
-				</View>
-				<View style={styles.editProfileNameContainer}>
-					<View style={{...styles.editProfileNameLabel, ...styles.editProfileLabel}}>
-						<Text>Display Name</Text>
-					</View>
-					<TextInput
-						style={styles.editProfileNameInput}
-						onChangeText={(displayName) => this.setState({displayName})}
-						placeholder={displayNameValue}
-					/>
-				</View>
-				<View style={styles.editProfileNameContainer}>
-					<View style={{...styles.editProfileNameLabel, ...styles.editProfileLabel}}>
-						<FAwesomeIcon
-							name="envelope-o"
-							color="rgb(89, 102, 139)"
-							style={styles.editProfileNameLabelEmailIcon}
-							size={15}
+			<div>
+				<form onSubmit={this.onSubmit}>
+					<div className="form-group">
+						<label className="text-secondary" for="name">Name</label>
+						<input 
+							onChange={event => this.setState({name: event.target.value})}
+							name="name"
+							label="Name"
+							type="text"
+							value={this.state.name}
+							className="form-control"
 						/>
-						<Text>Email</Text>
-					</View>
-					<TextInput
-						style={styles.editProfileNameInput}
-						onChangeText={(email) => this.setState({email})}
-						placeholder={email}
-					/>
-				</View>
-			</View>
-
+					</div>
+					<div className="form-group">
+						<label className="text-secondary" for="displayName">Display Name</label>
+						<input 
+							onChange={event => this.setState({displayName: event.target.value})}
+							name="displayName"
+							label="Display Name"
+							type="text"
+							value={this.state.displayName}
+							className="form-control"
+						/>
+					</div>
+					<div className="form-group">
+						<label className="text-secondary" for="email">Email</label>
+						<input 
+							onChange={event => this.setState({email: event.target.value})}
+							name="email"
+							label="Email"
+							type="text"
+							value={this.state.email}
+							className="form-control"
+						/>
+					</div>
+					<button type="submit" className="btn btn-primary" onClick={this.onDonePress}>Done</button>
+				</form>
+				<div className="my-5">
+					<ChangeAvatar />
+				</div>
+				
+			</div>
 		)
 	}
 }
 
 const mapStateToProps = (state) => {
-	const {user} = state.authentication
-	return {user}
+	const { isFetchingUser, user } = state.user
+	return { user, isFetchingUser }
 }
+const mapDispatchToProps = dispatch => bindActionCreators({
+	getCurrentUser,
+	userEdit
+}, dispatch)
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		userEdit: (user) => dispatch(userEdit(user))
-	}
-}
-
-export default withNavigation(connect(mapStateToProps, mapDispatchToProps)(EditProfile))
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile)

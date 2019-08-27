@@ -10,6 +10,10 @@ const GET_CURRENT_USER_REQUEST = 'GET_CURRENT_USER_REQUEST'
 const GET_CURRENT_USER_SUCCESS = 'GET_CURRENT_USER_SUCCESS'
 const GET_CURRENT_USER_FAILURE = 'GET_CURRENT_USER_FAILURE'
 
+const POST_USER_AVATAR_REQUEST = 'POST_USER_AVATAR_REQUEST'
+const POST_USER_AVATAR_SUCCESS = 'POST_USER_AVATAR_SUCCESS'
+const POST_USER_AVATAR_FAILURE = 'POST_USER_AVATAR_FAILURE'
+
 const USER_CREATE_SUCCESS = 'USER_CREATE_SUCCESS'
 const USER_CREATE_REQUEST = 'USER_CREATE_REQUEST'
 const USER_CREATE_FAILURE = 'USER_CREATE_FAILURE'
@@ -21,6 +25,39 @@ const USER_EDIT_FAILURE = 'USER_EDIT_FAILURE'
 const SEARCH_USERS_SUCCESS = 'SEARCH_USERS_SUCCESS'
 const SEARCH_USERS_REQUEST = 'SEARCH_USERS_REQUEST'
 const SEARCH_USERS_FAILURE = 'SEARCH_USERS_FAILURE'
+
+const postUserAvatarRequest = () => {
+    return {
+        type: POST_USER_AVATAR_REQUEST
+    }
+}
+
+const postUserAvatarSuccess = (user) => {
+    return {
+        type: POST_USER_AVATAR_SUCCESS,
+        user
+    }
+}
+
+const postUserAvatarFailure = () => {
+    return {
+        type: POST_USER_AVATAR_FAILURE
+    }
+}
+
+export const postUserAvatar = (avatar) => {
+    console.log("avatar", avatar.avatar)
+    return function(dispatch) {
+        dispatch(postUserAvatarRequest())
+        return API.post('/users/me/avatar', avatar.avatar)
+            .then(function(response) {
+                dispatch(postUserAvatarSuccess(response.data))
+            })
+            .catch(function(error) {
+                dispatch(postUserAvatarFailure())
+            })
+    }
+} 
 
 const getCurrentUserRequest = () => {
     return {
@@ -109,7 +146,8 @@ export const userEdit = (user) => {
         dispatch(userEditRequest)
         return API.patch("/users/me", user)
             .then(function(response) {
-                dispatch(userEditSuccess(response.data.user))
+                console.log(response)
+                dispatch(userEditSuccess(response.data))
             }).catch(function(error) {
                 console.log("Error in editing user: ", error)
                 dispatch(userEditFailure)
