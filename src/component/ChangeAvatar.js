@@ -33,9 +33,8 @@ class ChangeAvatar extends React.Component {
 
     onSubmit(e) {
         e.preventDefault()
-        console.log(e.target.files)
-        const formData = new FormData()
-        formData.append('avatar', this.state.avatar)
+        let formData = new FormData()
+        formData.append('file', this.state.avatar)
         this.props.postUserAvatar(formData)
     }
 
@@ -47,17 +46,17 @@ class ChangeAvatar extends React.Component {
         }
         return (
             <div>
-                <form onSubmit={this.onSubmit} enctype="multipart/form-data">
+                <form onSubmit={this.onSubmit} encType="multipart/form-data">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroupFileAddon01">Profile Picture</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" onChange={this.handleImageChange} name="avatar" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" />
+                            <input type="file" accept="image/png, image/jpg, image/jpeg" onChange={this.handleImageChange} name="avatar" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" />
                             <label className="custom-file-label" for="inputGroupFile01">Browse</label>
                         </div>
                     </div>
-                    <button type="submit" onClick={this.onSubmit} className="btn btn-primary">Change profile picture</button>
+                    <button type="submit" className="btn btn-primary">Change profile picture</button>
                 </form>
                 {imagePreview}
             </div>

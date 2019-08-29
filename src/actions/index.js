@@ -46,14 +46,19 @@ const postUserAvatarFailure = () => {
 }
 
 export const postUserAvatar = (avatar) => {
-    console.log("avatar", avatar.avatar)
+    console.log("avatar", avatar)
     return function(dispatch) {
         dispatch(postUserAvatarRequest())
-        return API.post('/users/me/avatar', avatar.avatar)
+        return API.post('/users/me/avatar', avatar, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
             .then(function(response) {
                 dispatch(postUserAvatarSuccess(response.data))
             })
             .catch(function(error) {
+                console.log(error)
                 dispatch(postUserAvatarFailure())
             })
     }
