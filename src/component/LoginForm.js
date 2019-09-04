@@ -17,7 +17,6 @@ class LoginForm extends React.Component {
     }
 
     onSubmit(formValues) {
-        console.log(formValues)
         this.props.login(formValues)
     }
 
@@ -33,15 +32,25 @@ class LoginForm extends React.Component {
         )
     }
 
+    renderLoginError(loginError) {
+        if (loginError && loginError.name === "Error" && loginError.message) {
+            return (
+                <div className="alert alert-danger" role="alert">
+                    {loginError.message}
+                </div>
+            )
+        }
+    }
+
     render() {
-        const { isFetching } = this.props
-        console.log("isFetching: ", isFetching)
+        const { isFetching, loginError } = this.props
         return (
             <Paper>
                 <Box
                     p={2}
                 >
                     <form className="auth-form-container" onSubmit={this.props.handleSubmit(this.onSubmit)}>
+                        {this.renderLoginError(loginError)}
                         <Box
                             mb={2}
                         >
@@ -74,8 +83,8 @@ class LoginForm extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { isFetching } = state.authentication
-    return { isFetching }
+    const { isFetching, loginError } = state.authentication
+    return { isFetching, loginError }
 }
 
 const mapDispatchToProps = dispatch => {

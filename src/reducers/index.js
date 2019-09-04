@@ -15,6 +15,10 @@ const POST_USER_AVATAR_REQUEST = 'POST_USER_AVATAR_REQUEST'
 const POST_USER_AVATAR_SUCCESS = 'POST_USER_AVATAR_SUCCESS'
 const POST_USER_AVATAR_FAILURE = 'POST_USER_AVATAR_FAILURE'
 
+const FETCH_USER_AVATAR_REQUEST = 'FETCH_USER_AVATAR_REQUEST'
+const FETCH_USER_AVATAR_SUCCESS = 'FETCH_USER_AVATAR_SUCCESS'
+const FETCH_USER_AVATAR_FAILURE = 'FETCH_USER_AVATAR_FAILURE'
+
 const USER_CREATE_SUCCESS = 'USER_CREATE_SUCCESS'
 const USER_CREATE_REQUEST = 'USER_CREATE_REQUEST'
 const USER_CREATE_FAILURE = 'USER_CREATE_FAILURE'
@@ -54,7 +58,10 @@ const UPDATE_FRIEND_FAILURE = 'UPDATE_FRIEND_FAILURE'
 const initialState = {
 	isFetchingUser: false,
 	isUploadingAvatar: false,
+	loginError: {},
+	userCreateError: {},
 	user: {},
+	avatar: null,
 	searchedUsers: [],
 	isSearchingUsers: false,
 	isPasswordMismatch: false,
@@ -64,11 +71,11 @@ const initialState = {
 	isEdittingUser: false,
 	isDeletingPost: false,
 	isFetchingFriends: false,
-	signUpErrors: {},
 	posts: {},
 	friends: {},
 	isCreatingFriend: false,
-	isUpdatingFriend: false
+	isUpdatingFriend: false,
+	isFetchingUserAvatar: false
 }
 
 const authentication = (state = initialState, action) => {
@@ -79,17 +86,20 @@ const authentication = (state = initialState, action) => {
 				isAuthenticated: true,
 				isFetching: false,
 				user: action.user,
-				token: action.token
+				token: action.token,
+				loginError: {}
 			}
 		case LOGIN_REQUEST:
 			return {
 				...state,
-				isFetching: true
+				isFetching: true,
+				loginError: {}
 			}
 		case LOGIN_FAILURE:
 			return {
 				...state,
-				isFetching: false
+				isFetching: false,
+				loginError: action.error
 			}
 		case LOGOUT:
 			return {
@@ -124,19 +134,21 @@ const user = (state = initialState, action) => {
 				...state,
 				isAuthenticated: true,
 				isFetching: false,
+				userCreateError: {},
 				user: action.user,
 				token: action.token
 			}
 		case USER_CREATE_REQUEST:
 			return {
 				...state,
-				isFetching: true
+				isFetching: true,
+				userCreateError: {}
 			}
 		case USER_CREATE_FAILURE:
 			return {
 				...state,
 				isFetching: false,
-				signUpErrors: action.signUpErrors
+				userCreateError: action.userCreateError
 			}
 		case USER_EDIT_FAILURE: 
 			return {
@@ -164,6 +176,25 @@ const user = (state = initialState, action) => {
 			return {
 				...state,
 				isSearchingUsers: false
+			}
+		case FETCH_USER_AVATAR_REQUEST:
+			return {
+				...state,
+				isFetchingUserAvatar: true
+			}
+		case FETCH_USER_AVATAR_SUCCESS:
+			return {
+				...state,
+				user: {
+					...state.user,
+					avatar: action.avatar
+				},
+				isFetchingUserAvatar: false
+			}
+		case FETCH_USER_AVATAR_FAILURE:
+			return {
+				...state,
+				isFetchingUserAvatar: false
 			}
 		default:
 			return state

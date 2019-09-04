@@ -52,7 +52,7 @@ class ChangeAvatar extends React.Component {
                             <span class="input-group-text" id="inputGroupFileAddon01">Profile Picture</span>
                         </div>
                         <div class="custom-file">
-                            <input type="file" accept="image/png, image/jpg, image/jpeg" onChange={this.handleImageChange} name="avatar" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" />
+                            <input type="file" accept="image/png, image/jpg, image/jpeg" onChange={this.handleImageChange} name="avatar" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" required/>
                             <label className="custom-file-label" for="inputGroupFile01">Browse</label>
                         </div>
                     </div>

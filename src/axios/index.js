@@ -7,8 +7,9 @@ API.interceptors.response.use((response) =>  {
 }, (error) => {
 	console.log("Error with axios interceptor", error)
 	if (error && error.response && error.response.status === 401) {
+		history.push('/login')
 		return Promise.reject(
-			history.push('/login')
+			error
 		);
 	}
 })

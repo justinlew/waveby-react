@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
 import { FaSearch } from 'react-icons/fa'
-import { logout, searchUsers, getCurrentUser } from '../actions'
+import { logout, searchUsers, getCurrentUser, fetchUserAvatar } from '../actions'
 import avatar from './public/avatar.png'
 import history from '../history'
 
@@ -14,6 +14,7 @@ class HomeNavBar extends Component {
         this.logout = this.logout.bind(this)
         this.searchingUsers = this.searchingUsers.bind(this)
         this.editProfile = this.editProfile.bind(this)
+        this.renderAvatar = this.renderAvatar.bind(this)
     }
 
     componentDidMount() {
@@ -36,6 +37,14 @@ class HomeNavBar extends Component {
         history.push('/home/editProfile')
     }
 
+    renderAvatar() {
+        if (!this.props.user.avatar) {
+            return avatar
+        } else {
+            return `data:image/jpg;base64,${this.props.user.avatar}`
+        }
+    }
+
     render() {
         console.log(this.props.user)
         return (
@@ -53,7 +62,7 @@ class HomeNavBar extends Component {
                     <div className="my-2 my-lg-0" id="navbarSupportedContent">
                         <div className="btn-group">
                             <button type="button" className="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img className="iconImage" alt="Profile" src={`data:image/jpg;base64,${this.props.user.avatar}`}/>
+                                <img className="iconImage" alt="Profile" src={this.renderAvatar()}/>
                             </button>
                             <div className="dropdown-menu dropdown-menu-right">
                                 <a className="dropdown-item" onClick={this.editProfile}>Edit Profile</a>
@@ -72,16 +81,17 @@ class HomeNavBar extends Component {
 }
 
 const mapStateToProps = (state) => {
-	const { isFetchingUser, user } = state.user
+	const { isFetchingUser, user, avatar } = state.user
 	return {
-		user, isFetchingUser
+		user, isFetchingUser, avatar
 	}
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     logout,
     searchUsers,
-    getCurrentUser
+    getCurrentUser,
+    fetchUserAvatar
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeNavBar)

@@ -19,15 +19,14 @@ API.interceptors.request.use(
         return Promise.reject(error)
 })
 
-API.interceptors.response.use((response) =>  {
+API.interceptors.response.use((response) => {
 	return response
 }, (error) => {
-	console.log("Error with axios interceptor", error)
+	console.error("Error with axios interceptor", error)
 	if (error && error.response && error.response.status === 401) {
-		return Promise.reject(
-			history.push('/login')
-		);
-	}
+        history.push('/login')
+    }
+    return Promise.reject(error)
 })
 
 export default API

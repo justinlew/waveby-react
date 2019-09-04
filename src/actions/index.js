@@ -14,6 +14,10 @@ const POST_USER_AVATAR_REQUEST = 'POST_USER_AVATAR_REQUEST'
 const POST_USER_AVATAR_SUCCESS = 'POST_USER_AVATAR_SUCCESS'
 const POST_USER_AVATAR_FAILURE = 'POST_USER_AVATAR_FAILURE'
 
+const FETCH_USER_AVATAR_REQUEST = 'FETCH_USER_AVATAR_REQUEST'
+const FETCH_USER_AVATAR_SUCCESS = 'FETCH_USER_AVATAR_SUCCESS'
+const FETCH_USER_AVATAR_FAILURE = 'FETCH_USER_AVATAR_FAILURE'
+
 const USER_CREATE_SUCCESS = 'USER_CREATE_SUCCESS'
 const USER_CREATE_REQUEST = 'USER_CREATE_REQUEST'
 const USER_CREATE_FAILURE = 'USER_CREATE_FAILURE'
@@ -25,6 +29,38 @@ const USER_EDIT_FAILURE = 'USER_EDIT_FAILURE'
 const SEARCH_USERS_SUCCESS = 'SEARCH_USERS_SUCCESS'
 const SEARCH_USERS_REQUEST = 'SEARCH_USERS_REQUEST'
 const SEARCH_USERS_FAILURE = 'SEARCH_USERS_FAILURE'
+
+const fetchUserAvatarRequest = () => {
+    return {
+        type: FETCH_USER_AVATAR_REQUEST
+    }
+}
+
+const fetchUserAvatarSuccess = (avatar) => {
+    return {
+        type: FETCH_USER_AVATAR_SUCCESS,
+        avatar
+    }
+}
+
+const fetchUserAvatarFailure = () => {
+    return {
+        type: FETCH_USER_AVATAR_FAILURE
+    }
+}
+
+export const fetchUserAvatar = (id) => {
+    return function(dispatch) {
+        dispatch(fetchUserAvatarRequest())
+        return API.get(`/users/${id}/avatar`)
+        .then(function(response) {
+            dispatch(fetchUserAvatarSuccess(response.data))
+        })
+        .catch(function(error) {
+            dispatch(fetchUserAvatarFailure())
+        })
+    }
+}
 
 const postUserAvatarRequest = () => {
     return {
@@ -54,13 +90,13 @@ export const postUserAvatar = (avatar) => {
                 'Content-Type': 'multipart/form-data'
             }
         })
-            .then(function(response) {
-                dispatch(postUserAvatarSuccess(response.data))
-            })
-            .catch(function(error) {
-                console.log(error)
-                dispatch(postUserAvatarFailure())
-            })
+        .then(function(response) {
+            dispatch(postUserAvatarSuccess(response.data))
+        })
+        .catch(function(error) {
+            console.log(error)
+            dispatch(postUserAvatarFailure())
+        })
     }
 } 
 
@@ -87,11 +123,11 @@ export const getCurrentUser = () => {
     return function(dispatch) {
         dispatch(getCurrentUserRequest())
         return API.get('/users/profile')
-            .then(function(response) {
-                dispatch(getCurrentUserSuccess(response.data))
-            }).catch(function (error) {
-                dispatch(getCurrentUserFailure())
-            })
+        .then(function(response) {
+            dispatch(getCurrentUserSuccess(response.data))
+        }).catch(function (error) {
+            dispatch(getCurrentUserFailure())
+        })
     }
 }
 
@@ -118,11 +154,11 @@ export const searchUsers = (name) => {
     return function(dispatch) {
         dispatch(searchUsersRequest())
         return API.get(`/users/query/${name}`)
-            .then(function(response) {
-                dispatch(searchUsersSuccess(response.data))
-            }).catch(function(error) {
-                dispatch(searchUsersFailure())
-            })
+        .then(function(response) {
+            dispatch(searchUsersSuccess(response.data))
+        }).catch(function(error) {
+            dispatch(searchUsersFailure())
+        })
     }
 }
 
@@ -150,13 +186,13 @@ export const userEdit = (user) => {
     return function(dispatch) {
         dispatch(userEditRequest)
         return API.patch("/users/me", user)
-            .then(function(response) {
-                console.log(response)
-                dispatch(userEditSuccess(response.data))
-            }).catch(function(error) {
-                console.log("Error in editing user: ", error)
-                dispatch(userEditFailure)
-            })
+        .then(function(response) {
+            console.log(response)
+            dispatch(userEditSuccess(response.data))
+        }).catch(function(error) {
+            console.log("Error in editing user: ", error)
+            dispatch(userEditFailure)
+        })
     }
 }
 
@@ -171,13 +207,13 @@ export const loginSuccess = (user, token) => {
         type: LOGIN_SUCCESS,
         user,
         token
-
     }
 }
 
-export const loginFailure = () => {
+export const loginFailure = (error) => {
     return {
-        type: LOGIN_FAILURE
+        type: LOGIN_FAILURE,
+        error
     }
 }
 
@@ -192,16 +228,15 @@ export const login = (credentials) => {
         dispatch(loginRequest());
         return API.post("/users/login",
             credentials
-            )
-            .then(function (response) {
-                dispatch(loginSuccess(response.data.user, response.data.token))
-                localStorage.setItem('token', response.data.token)
-                history.push('/home')
-            }
-            ).catch(function (error) {
-                console.log('An error has occured with the authentication', error)
-                dispatch(loginFailure())
-            })
+        )
+        .then(function (response) {
+            dispatch(loginSuccess(response.data.user, response.data.token))
+            localStorage.setItem('token', response.data.token)
+            history.push('/home')
+        })
+        .catch(function (error) {
+            dispatch(loginFailure(error.response.data))
+        })
     }
 }
 
@@ -209,12 +244,12 @@ export const logout = (user, token) => {
     return function(dispatch) {
         dispatch(logoutRequest())
         return API.post("/users/logout")
-            .then(function(response) {
-                localStorage.clear()
-                history.push('/login')
-            }).catch(function (error) {
-                console.log("Failed logout", error)
-            })
+        .then(function(response) {
+            localStorage.clear()
+            history.push('/login')
+        }).catch(function (error) {
+            console.log("Failed logout", error)
+        })
     }
 }
 
@@ -226,10 +261,10 @@ export const userCreateSuccess = (user, token) => {
     }
 }
 
-export const userCreateFailure = (signUpErrors) => {
+export const userCreateFailure = (userCreateError) => {
     return {
         type: USER_CREATE_FAILURE,
-        signUpErrors
+        userCreateError
     }
 }
 
@@ -242,16 +277,23 @@ export const userCreateRequest = () => {
 export const signUp = (user) => {
     return function(dispatch) {
         dispatch(userCreateRequest());
+        if (user.password !== user.passwordConfirmation) {
+            dispatch(userCreateFailure({
+                password: {
+                    message: "Password confirmation does not match"
+                }
+            }))
+            return Promise.resolve()
+        }
         return API.post("/users", user)
-            .then(function (response) {
-                localStorage.setItem('token', response.data.token)
-                dispatch(userCreateSuccess(response.data.user, response.data.token));
-                history.push('/home')
-            })
-            .catch(function(error) {
-                console.log('An error has occured with creating user', error)
-                dispatch(userCreateFailure(error.errors));
-            })
+        .then(function (response) {
+            localStorage.setItem('token', response.data.token)
+            dispatch(userCreateSuccess(response.data.user, response.data.token));
+            history.push('/home')
+        })
+        .catch(function(error) {
+            console.log('An error has occured with creating user', error.response.data.errors)
+            dispatch(userCreateFailure(error.response.data.errors));
+        })
     }
 }
-
