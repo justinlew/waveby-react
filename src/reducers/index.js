@@ -196,6 +196,22 @@ const user = (state = initialState, action) => {
 				...state,
 				isFetchingUserAvatar: false
 			}
+		case POST_USER_AVATAR_REQUEST:
+			return {
+				...state,
+				isUploadingAvatar: true
+			}
+		case POST_USER_AVATAR_SUCCESS:
+			return {
+				...state,
+				user: action.user,
+				isUploadingAvatar: false
+			}
+		case POST_USER_AVATAR_FAILURE:
+			return {
+				...state,
+				isUploadingAvatar: false
+			}
 		default:
 			return state
 	}
@@ -249,22 +265,6 @@ const post = (state = initialState, action) => {
 			return {
 				...state,
 				isDeletingPost: false
-			}
-		case POST_USER_AVATAR_REQUEST:
-			return {
-				...state,
-				isUploadingAvatar: true
-			}
-		case POST_USER_AVATAR_SUCCESS:
-			return {
-				...state,
-				user: action.user,
-				isUploadingAvatar: false
-			}
-		case POST_USER_AVATAR_FAILURE:
-			return {
-				...state,
-				isUploadingAvatar: false
 			}
 		default:
 			return state

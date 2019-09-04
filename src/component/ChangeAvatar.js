@@ -38,8 +38,18 @@ class ChangeAvatar extends React.Component {
         this.props.postUserAvatar(formData)
     }
 
+    renderLoadingIndicator() {
+        return (
+            <div className="spinner-border text-secondary" role="status">
+                <span className="sr-only">Uploading...</span>
+            </div>
+        )
+    }
+
     render() {
         let { imagePreviewUrl } = this.state
+        let { isUploadingAvatar } = this.props
+        console.log(isUploadingAvatar)
         let imagePreview = null;
         if (imagePreviewUrl) {
             imagePreview = <img className="iconImage" alt="Profile avatar" src={imagePreviewUrl} />
@@ -47,16 +57,16 @@ class ChangeAvatar extends React.Component {
         return (
             <div>
                 <form onSubmit={this.onSubmit} encType="multipart/form-data">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupFileAddon01">Profile Picture</span>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="inputGroupFileAddon01">Profile Picture</span>
                         </div>
-                        <div class="custom-file">
+                        <div className="custom-file">
                             <input type="file" accept="image/png, image/jpg, image/jpeg" onChange={this.handleImageChange} name="avatar" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" required/>
                             <label className="custom-file-label" for="inputGroupFile01">Browse</label>
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary">Change profile picture</button>
+                    <button type="submit" className="btn btn-primary">{isUploadingAvatar ? this.renderLoadingIndicator() : "Upload profile picture"}</button>
                 </form>
                 {imagePreview}
             </div>
