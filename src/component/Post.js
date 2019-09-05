@@ -11,6 +11,7 @@ class Post extends Component {
 		super(props)
 		this.onOptionPress = this.onOptionPress.bind(this)
 		this.removePost = this.removePost.bind(this)
+		this.renderAvatar = this.renderAvatar.bind(this)
 	}
 
 	onOptionPress = () => {
@@ -21,16 +22,23 @@ class Post extends Component {
 		this.props.deletePost(post)
 	}
 
+	renderAvatar() {
+        if (!this.props.author) {
+            return avatar
+        } else {
+            return `data:image/jpg;base64,${this.props.author.avatar}`
+        }
+    }
+
 	render() {
 		const date = new Date(this.props.created_by)
-
 		return (
 			<div className="container-fluid rounded-lg pt-2 pb-1" id="post-container">
 				<div className="row">
 					<div className="col">
 						<div className="d-inline-block">
 							<div>
-								<img className="iconImage" src={avatar} alt="Avatar icon"/>
+								<img className="iconImage" src={this.renderAvatar()} alt="Avatar icon"/>
 							</div>
 						</div>
 						<div className="d-inline-block">

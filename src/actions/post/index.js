@@ -73,7 +73,7 @@ const fetchPostsFailure = () => {
 export const fetchPosts = () => {
 	return function(dispatch) {
 		dispatch(fetchPostsRequest())
-		return API.get("/posts")
+		return API.get("/timeline")
 			.then(function (response) {
 				dispatch(fetchPostsSuccess(response.data))
 			}).catch(function (error) {
