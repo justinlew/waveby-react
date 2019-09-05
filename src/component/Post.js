@@ -23,7 +23,7 @@ class Post extends Component {
 	}
 
 	renderAvatar() {
-        if (!this.props.author) {
+        if (!this.props.author.avatar) {
             return avatar
         } else {
             return `data:image/jpg;base64,${this.props.author.avatar}`
