@@ -14,12 +14,20 @@ export default class Friend extends React.Component {
         this.props.onIconClick(this.props)
     }
 
+    renderAvatar() {
+        if (!this.props.avatar) {
+            return avatar1
+        } else {
+            return `data:image/jpg;base64,${this.props.avatar}`
+        }
+    }
+
     render() {
         return (
             <div className="container py-3 friend-list-container" onClick={this.onClick}>
                 <div className="row">
                     <div className="col friend-name-container">
-                        <img className="friend-icon mr-3" src={avatar1} alt="avatar"/> 
+                        <img className="friend-icon mr-3" src={this.renderAvatar()} alt="avatar"/>
                         <span className="align-right white">{this.props.name}</span>
                     </div>
                     {this.props.status === "requested" && !this.props.isSourceUser ? (

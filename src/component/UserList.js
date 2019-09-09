@@ -29,6 +29,14 @@ class UserList extends React.Component {
         this.props.createFriend(id)
     }
 
+    renderAvatar(image) {
+        if (!image) {
+            return avatar
+        } else {
+            return `data:image/jpg;base64,${image}`
+        }
+    }
+
     render() {
         const { searchedUsers, friends } = this.props
         
@@ -43,13 +51,12 @@ class UserList extends React.Component {
                             <div className="col">
                                 <div className="d-inline-block">
                                     <div>
-                                        <img className="iconImage" src={avatar} alt="The user" />
+                                        <img className="iconImage" src={this.renderAvatar(user.avatar)} alt="The user" />
                                     </div>
                                 </div>
                                 <div className="d-inline-block">
                                     <b>{user.name}</b>
                                 </div>
-                                
                             </div>
                             <div className="col"></div>
                             <div className="col">

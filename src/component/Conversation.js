@@ -90,6 +90,7 @@ class Conversation extends React.Component {
                 </div>
                 <form onSubmit={this.handleSubmit} >
                     <input className="message-input" type="text" name="message" placeholder="Send a message" onChange={this.handleChange}/>
+                    <button type="submit" className="btn btn-secondary btn-block margin-bottom">Send message</button>
                 </form>
             </div>
         )

@@ -72,8 +72,8 @@ class LoginForm extends React.Component {
                                 { isFetching ? this.renderLoadingIndicator() : "Login"}
                             </Button>
                         </Box>
-                        <Box>
-                            <p>Need an account? <Link to="/signup">Sign up.</Link></p>
+                        <Box className="mt-1">
+                            <p className="mb-0">Need an account? <Link to="/signup">Sign up.</Link></p>
                         </Box>
                     </form>
                 </Box>

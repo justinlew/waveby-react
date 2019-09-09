@@ -4,8 +4,18 @@ h1 {
     color: white;
 }
 
-.grey-container {
-    background-color: #99AAB5;
+h6 {
+    text-align: center;
+    width: 300px;
+    color: white;
+}
+
+.login-container {
+    height: 100vh;
+}
+
+.login-grid-container {
+    height: 100vh;
 }
 
 .auth-input-container {

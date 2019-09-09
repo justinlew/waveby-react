@@ -24,11 +24,10 @@ class SignUpForm extends React.Component {
     renderInput({ input, label, type, meta: { touched, error, warning } }) {
         return (
             <div>
-                <label for={label}>{label}</label>
+                <label className="mb-1">{label}</label>
                 <input
                     className="form-control"
                     type={type}
-                    placeholder={label}
                     value={input.value}
                     onChange={input.onChange}
                 />
@@ -109,8 +108,11 @@ class SignUpForm extends React.Component {
                                 { isFetching ? this.renderLoadingIndicator() : "Sign Up"}
                             </Button>
                         </Box>
-                        <Box>
-                            <p>Have an account? <Link to='/login'>Login.</Link></p>
+                        <Box className="mt-1">
+                            <p className="mb-0">Have an account? <Link to='/login'>Login.</Link></p>
+                        </Box>
+                        <Box className="mt-3">
+                            <p className="mb-0">By registering, you agree to Waveby's <Link to='/terms' target='_blank'>Terms of Service</Link> and <Link to='/privacy' target='_blank'>Privacy Policy</Link></p>
                         </Box>
                     </form>
                 </Box>

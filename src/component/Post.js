@@ -32,6 +32,7 @@ class Post extends Component {
 
 	render() {
 		const date = new Date(this.props.created_by)
+		const isUserAuthor = this.props.isUserAuthor
 		return (
 			<div className="container-fluid rounded-lg pt-2 pb-1" id="post-container">
 				<div className="row">
@@ -52,7 +53,7 @@ class Post extends Component {
 							<div className="dropdown dropleft">
 								<IoIosMore className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
 								<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<a href="#" onClick={() => this.removePost(this.props)} className="dropdown-item">Remove post</a>
+									{isUserAuthor ? <a href="#" onClick={() => this.removePost(this.props)} className="dropdown-item">Remove post</a> : undefined}
 								</div>
 							</div>
 						</span>
@@ -66,17 +67,13 @@ class Post extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({
-});
-
-
 const mapDispatchToProps = dispatch => {
     return {
         deletePost: post => dispatch(deletePost(post)) 
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Post)
+export default connect(undefined, mapDispatchToProps)(Post)
 
 
 

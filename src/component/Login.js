@@ -11,19 +11,25 @@ class Login extends React.Component {
     render() {
         return (
             <Box
-                mt={10}
-                pt={5}
-                pb={5}
-                className="grey-container"
+                className="login-container"
             >
                 <Grid
                     container
+                    spacing={5}
                     direction="row"
                     justify="center"
                     alignItems="center"
+                    className="login-grid-container"
                 >
-                    <h1>Waveby</h1>
-                    <LoginForm/>
+                    <Grid
+                        item
+                    >
+                        <h1>waveby</h1>
+                        <h6>lets make friends</h6>
+                    </Grid>
+                    <Grid item>
+                        <LoginForm/>
+                    </Grid>
                 </Grid>
             </Box>
         );

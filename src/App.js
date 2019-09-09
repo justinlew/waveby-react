@@ -6,6 +6,8 @@ import { Router, Route } from 'react-router-dom'
 import history from './history'
 import Home from './component/Home'
 import SignUp from './component/SignUp'
+import Terms from './component/policy/Terms'
+import Privacy from './component/policy/Privacy'
 
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 
@@ -23,6 +25,8 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
         <Route path="/home" component={Home} />
+        <Route path="/terms" component={Terms} />
+        <Route path="/privacy" component={Privacy} />
       </Router>
     </Provider>
   );

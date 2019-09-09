@@ -2,6 +2,9 @@
     background-color: #9198e5; 
 }
 .message-input {
-    margin-bottom: 100px; 
+    margin-bottom: 10px;
     width: 100%; 
+}
+.message-button {
+    margin-bottom: 100px;
 }

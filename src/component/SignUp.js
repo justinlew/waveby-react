@@ -13,16 +13,24 @@ class SignUp extends Component {
                 mt={10}
                 pt={5}
                 pb={5}
-                className="grey-container"
+                className="login-container"
             >
                 <Grid
                     container
-                    direction="row"
+                    spacing={5}
+                    direction="column"
                     justify="center"
                     alignItems="center"
                 >
-                    <h1>Waveby</h1>
-                    <SignUpForm/>
+                    <Grid
+                        item
+                    >
+                        <h1>waveby</h1>
+                        <h6>lets make friends</h6>
+                    </Grid>
+                    <Grid item>
+                        <SignUpForm/>
+                    </Grid>
                 </Grid>
             </Box>
         );
