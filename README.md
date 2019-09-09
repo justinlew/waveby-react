@@ -3,8 +3,8 @@
 You can now play around with [Waveby](https://waveby.herokuapp.com).
 Updates and new features will be delivered in due time :)
 
-This social media application allows users to post onto their timelines which can be seen by accepted friends. Users are allowed to create conversation in order to instantly message friends.
-This project written using the React.js and Redux libraries was used to create a boilerplate for any social media application I intend to create in the near future.
+This social media application allows users to post blogs onto their timelines which can be seen by accepted friends. Users are allowed to create conversation in order to instantly message friends.
+This project was written using the React and Redux libraries to create a boilerplate for any social media application I intend to create in the near future.
 
 ### Waveby REST APIs
 
