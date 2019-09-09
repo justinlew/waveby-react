@@ -1,5 +1,10 @@
 #waveby-title {
     color: white;
+    letter-spacing: 0.25rem;
+}
+
+#waveby-title:visited {
+    color: white;
 }
 
 #post-container {
@@ -16,9 +21,10 @@
 }
 
 .iconImage {
-    width: 75px;
-    height: 75px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    top: 0px;
 }
 .iconCol {
     align: right;

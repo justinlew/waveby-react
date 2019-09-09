@@ -101,7 +101,7 @@ class Home extends Component {
 						</div>
 					</div>
 				</div>
-				<div className="friend-container border border-secondary dropdown">
+				<div className="friend-container border border-secondary dropup">
 					<button className="btn btn-lg dropdown-toggle friend-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Friends
 					</button>

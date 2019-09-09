@@ -20,7 +20,6 @@ class Conversation extends React.Component {
     }
 
     handleMessageReload(messages) {
-        console.log(messages)
         this.setState({messages})
     }
 
@@ -63,6 +62,7 @@ class Conversation extends React.Component {
         console.log("Submitting")
         event.preventDefault()
         this.socket.emit('chat message', this.state.message)
+        $('.message-input').val('')
     }
 
     handleChange(event) {
@@ -89,7 +89,7 @@ class Conversation extends React.Component {
                     </ul>
                 </div>
                 <form onSubmit={this.handleSubmit} >
-                    <input className="message-input" type="text" name="message" placeholder="Send a message" onChange={this.handleChange}/>
+                    <input className="message-input" type="text" name="message" placeholder="Send a message" onChange={this.handleChange} required/>
                     <button type="submit" className="btn btn-secondary btn-block margin-bottom">Send message</button>
                 </form>
             </div>
@@ -101,6 +101,6 @@ const mapStateToProps = (state) => {
     const { user, isFetchingUser } = state.user
     const { token } = state.authentication
 	return { user, token, isFetchingUser }
-};
+}
 
 export default connect(mapStateToProps)(Conversation)

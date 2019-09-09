@@ -15,7 +15,7 @@ function Message(props) {
         <div className="card">
             <div className="card-body px-1 py-1">
                 <h6 className="card-title mb-0">
-                    <img className="iconImageMessage" src={renderAvatar(props.author.avatar)} alt="Avatar icon"/>
+                    <img className="image-icon-message mx-1 my-1" src={renderAvatar(props.author.avatar)} alt="Avatar icon"/>
                     {props.author.name}
                 </h6>
                 <p className="card-text">{props.message}</p>

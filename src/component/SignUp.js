@@ -25,8 +25,8 @@ class SignUp extends Component {
                     <Grid
                         item
                     >
-                        <h1>waveby</h1>
-                        <h6>lets make friends</h6>
+                        <h1 id="header-title">waveby</h1>
+                        <h6 id="header-slogan">lets make friends</h6>
                     </Grid>
                     <Grid item>
                         <SignUpForm/>

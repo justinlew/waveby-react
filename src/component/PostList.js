@@ -18,7 +18,6 @@ class PostList extends React.Component {
 		let { posts } = this.props
 		posts = _.orderBy(posts, ['created_by'], ['asc'])
 		const listItems = posts.slice(0).reverse().map((post) => {
-			console.log(this.props.user._id.toString() === post.author._id.toString())
 			const isUserAuthor = this.props.user._id.toString() === post.author._id.toString()
 			return (
 				<li className="mb-2">

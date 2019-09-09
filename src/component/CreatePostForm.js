@@ -19,21 +19,31 @@ class CreatePostForm extends React.Component {
         	label={formProps.label}
         	placeholder="Is there something on your mind?"
 			id="new-post"
+			required
         />
     }
 
     onSubmit(formValues) {
 		const {createPost, reset} = this.props
         createPost(formValues.body).then(() => reset())
+	}
+
+	renderLoadingIndicator() {
+        return (
+            <div className="spinner-border text-secondary" role="status">
+                <span className="sr-only">Uploading...</span>
+            </div>
+        )
     }
 
     render() {
+		console.log("Isposting", this.props.isPosting)
     	return (
     		<div>
     			<form name="create-post-form" onSubmit={this.props.handleSubmit(this.onSubmit)}>
     				<Field name="body" component={this.renderInput} type="text" label="Post" />
 					<div className="d-flex justify-content-end">
-						<button type="submit" className="btn btn-primary m-2 postSubmitButton">Submit Post</button>
+						<button type="submit" className="btn btn-primary m-2 postSubmitButton">{this.props.isPosting ? this.renderLoadingIndicator() : "Submit Post"}</button>
 					</div>
     				
     			</form>
@@ -42,8 +52,10 @@ class CreatePostForm extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-});
+const mapStateToProps = (state) => {
+	const { isPosting } = state.post
+	return { isPosting }
+};
 
 const mapDispatchToProps = dispatch => {
 	return {

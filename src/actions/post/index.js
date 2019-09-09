@@ -36,17 +36,14 @@ const createPostFailure = () => {
 
 export const createPost = (body) => {
 	return function(dispatch) {
-		dispatch(createPostRequest)
+		dispatch(createPostRequest())
 		return API.post('/posts',
 			{body}
 		).then(function (response) {
-			console.log(response.data)
 			dispatch(createPostSuccess(response.data))
 			dispatch(reset("create-post-form"))
-			// NavigationService.navigate('Home')
 		}).catch(function (error) {
-			console.log("Error in creating a post: ", error.response)
-			dispatch(createPostFailure)
+			dispatch(createPostFailure())
 		})
 	}
 }

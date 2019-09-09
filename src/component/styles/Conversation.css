@@ -8,3 +8,8 @@
 .message-button {
     margin-bottom: 100px;
 }
+.image-icon-message {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+}

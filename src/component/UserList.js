@@ -12,9 +12,9 @@ class UserList extends React.Component {
         this.onAddFriendButtonPress = this.onAddFriendButtonPress.bind(this)
     }
 
-    AddUserButton(user) {
+    renderAddUserButton(user) {
         return (
-            <button className="btn" onClick={() => this.onAddFriendButtonPress(user._id)}>
+            <button className="btn btn-secondary" onClick={() => this.onAddFriendButtonPress(user._id)}>
                 <FaUserPlus />
             </button>
         )
@@ -51,7 +51,7 @@ class UserList extends React.Component {
                             <div className="col">
                                 <div className="d-inline-block">
                                     <div>
-                                        <img className="iconImage" src={this.renderAvatar(user.avatar)} alt="The user" />
+                                        <img className="iconImage mr-2" src={this.renderAvatar(user.avatar)} alt="The user" />
                                     </div>
                                 </div>
                                 <div className="d-inline-block">
@@ -61,7 +61,7 @@ class UserList extends React.Component {
                             <div className="col"></div>
                             <div className="col">
                                 <span className="float-right">
-                                    {bIsFriend ? <FaUserFriends /> : this.AddUserButton(user)}
+                                    {bIsFriend ? undefined: this.renderAddUserButton(user)}
                                 </span>
                             </div>
                         </div>

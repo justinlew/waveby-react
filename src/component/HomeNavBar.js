@@ -46,11 +46,10 @@ class HomeNavBar extends Component {
     }
 
     render() {
-        console.log(this.props.user)
         return (
             <div>
                 <nav className="navbar navbar-expand-lg justify-content-between" id="navbar-gradient">
-                    <div className="navbar-brand" id="waveby-title"><b><Link to="/home">Waveby</Link></b></div>
+                    <div className="navbar-brand"><b><Link to="/home" id="waveby-title">waveby</Link></b></div>
                         <form className="form-inline">
                             <div className="input-group">
                                 <div className="input-group-prepend">
@@ -81,9 +80,9 @@ class HomeNavBar extends Component {
 }
 
 const mapStateToProps = (state) => {
-	const { isFetchingUser, user, avatar } = state.user
+	const { isFetchingUser, user, avatar, isSearchingUsers } = state.user
 	return {
-		user, isFetchingUser, avatar
+		user, isFetchingUser, avatar, isSearchingUsers
 	}
 };
 

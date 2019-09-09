@@ -25,7 +25,7 @@ const USER_CREATE_FAILURE = 'USER_CREATE_FAILURE'
 
 const CREATE_POST_REQUEST = "CREATE_POST_REQUEST"
 const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS'
-// const CREATE_POST_FAILURE = 'CREATE_POST_FAILURE'
+const CREATE_POST_FAILURE = 'CREATE_POST_FAILURE'
 
 const FETCH_POSTS_REQUEST = "FETCH_POSTS_REQUEST"
 const FETCH_POSTS_SUCCESS = "FETCH_POSTS_SUCCESS"
@@ -57,6 +57,7 @@ const UPDATE_FRIEND_FAILURE = 'UPDATE_FRIEND_FAILURE'
 
 const initialState = {
 	isFetchingUser: false,
+	isPosting: false,
 	isUploadingAvatar: false,
 	loginError: {},
 	userCreateError: {},
@@ -225,7 +226,6 @@ const post = (state = initialState, action) => {
 				isPosting: true
 			}
 		case CREATE_POST_SUCCESS:
-			
 			return {
 				...state,
 				isPosting: false,
@@ -233,6 +233,11 @@ const post = (state = initialState, action) => {
 					...state.posts,
 					[action.post._id]: action.post
 				}
+			}
+		case CREATE_POST_FAILURE:
+			return {
+				...state,
+				isPosting: false
 			}
 		case FETCH_POSTS_REQUEST:
 			return {

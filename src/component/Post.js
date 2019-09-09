@@ -34,29 +34,27 @@ class Post extends Component {
 		const date = new Date(this.props.created_by)
 		const isUserAuthor = this.props.isUserAuthor
 		return (
-			<div className="container-fluid rounded-lg pt-2 pb-1" id="post-container">
+			<div className="container-fluid rounded-lg pt-2 pb-2" id="post-container">
 				<div className="row">
 					<div className="col">
 						<div className="d-inline-block">
-							<div>
-								<img className="iconImage" src={this.renderAvatar()} alt="Avatar icon"/>
-							</div>
+							<img className="iconImage m-1" src={this.renderAvatar()} alt="Avatar icon"/>
 						</div>
 						<div className="d-inline-block">
 							<b>{this.props.author.name}</b>
-							<p className="postHeaderDate">{date.toDateString()}</p>
+							<p className="postHeaderDate mb-0">{date.toDateString()}</p>
 						</div>
 						
 					</div>
 					<div className="col">
-						<span className="float-right">
-							<div className="dropdown dropleft">
-								<IoIosMore className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
-								<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									{isUserAuthor ? <a href="#" onClick={() => this.removePost(this.props)} className="dropdown-item">Remove post</a> : undefined}
-								</div>
+						<div className="btn-group dropleft float-right">
+							<button type="button" className="btn btn-outline-secondary border-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<IoIosMore />
+							</button>
+							<div className="dropdown-menu">
+								{isUserAuthor ? <a href="#" onClick={() => this.removePost(this.props)} className="dropdown-item">Remove post</a> : undefined}
 							</div>
-						</span>
+						</div>
 					</div>
 				</div>
 				<div>
